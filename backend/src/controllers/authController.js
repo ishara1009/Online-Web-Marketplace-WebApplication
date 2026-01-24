@@ -139,17 +139,32 @@ exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Update user profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  console.log('📝 Update Profile - User ID:', req.user.id);
+  console.log('📝 Has avatar in request:', !!req.body.avatar);
+  
   const newUserData = {
     name: req.body.name,
-    email: req.body.email,
     phone: req.body.phone,
     address: req.body.address,
   };
+
+  if (req.body.avatar) {
+    console.log('✅ Avatar received - length:', req.body.avatar.length);
+    newUserData.avatar = {
+      public_id: 'customer_avatar_' + Date.now(),
+      url: req.body.avatar,
+    };
+  } else {
+    console.log('❌ No avatar in request body');
+  }
 
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
   });
+
+  console.log('💾 Updated user avatar URL exists:', !!user.avatar?.url);
+  console.log('💾 Avatar URL length:', user.avatar?.url?.length || 0);
 
   res.status(200).json({
     success: true,

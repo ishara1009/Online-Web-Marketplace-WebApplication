@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './CustomerDashboard.css';
 
 const CustomerDashboard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    // Get user from localStorage
     const userData = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
@@ -18,19 +19,27 @@ const CustomerDashboard = () => {
 
     const parsedUser = JSON.parse(userData);
     
-    // Check if user is a customer
     if (parsedUser.role !== 'customer') {
       navigate('/login');
       return;
     }
 
     setUser(parsedUser);
-  }, [navigate]);
+  }, [navigate, refreshKey]);
+
+  // Refresh data when returning to this page
+  useEffect(() => {
+    setRefreshKey(prev => prev + 1);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     navigate('/login');
+  };
+
+  const handleEditProfile = () => {
+    navigate('/customer/edit-profile');
   };
 
   if (!user) {
@@ -54,7 +63,10 @@ const CustomerDashboard = () => {
         <aside className="dashboard-sidebar">
           <div className="user-profile">
             <div className="profile-avatar">
-              <img src={user.avatar?.url || 'https://via.placeholder.com/150'} alt="Profile" />
+              <img 
+                src={user.avatar?.url || 'https://via.placeholder.com/150'} 
+                alt="Profile"
+              />
             </div>
             <h3>{user.name}</h3>
             <p className="user-email">{user.email}</p>
@@ -156,7 +168,7 @@ const CustomerDashboard = () => {
                 <button className="action-btn secondary">
                   📝 Track Orders
                 </button>
-                <button className="action-btn secondary">
+                <button className="action-btn secondary" onClick={handleEditProfile}>
                   👤 Edit Profile
                 </button>
               </div>
