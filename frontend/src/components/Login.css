@@ -44,6 +44,17 @@
   font-size: 14px;
 }
 
+.success-message {
+  background-color: #e6ffe6;
+  color: #2d7a2d;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border-left: 4px solid #2d7a2d;
+  font-size: 14px;
+  animation: slideIn 0.3s ease-out;
+}
+
 .error-message {
   background-color: #fee;
   color: #c33;

@@ -82,9 +82,8 @@ const SellerSignup = () => {
       });
 
       if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        navigate('/seller/dashboard');
+        // Redirect to login page after successful registration
+        navigate('/login', { state: { message: 'Registration successful! Please login with your credentials.' } });
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.');

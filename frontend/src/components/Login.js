@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -12,6 +13,17 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    // Check if there's a success message from signup
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message);
+      // Clear the message after 5 seconds
+      const timer = setTimeout(() => setSuccessMessage(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -61,6 +73,7 @@ const Login = () => {
           <p>Welcome back! Please login to your account</p>
         </div>
 
+        {successMessage && <div className="success-message">{successMessage}</div>}
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit} className="login-form">
