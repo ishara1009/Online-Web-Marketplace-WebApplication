@@ -42,6 +42,10 @@ const CustomerDashboard = () => {
     navigate('/customer/edit-profile');
   };
 
+  const handleSettings = () => {
+    navigate('/customer/settings');
+  };
+
   if (!user) {
     return <div className="loading">Loading...</div>;
   }
@@ -86,7 +90,7 @@ const CustomerDashboard = () => {
             <li className="menu-item">
               <span>📍</span> Addresses
             </li>
-            <li className="menu-item">
+            <li className="menu-item" onClick={handleSettings}>
               <span>⚙️</span> Settings
             </li>
           </ul>
