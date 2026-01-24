@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import CustomerSignup from './components/CustomerSignup';
+import SellerSignup from './components/SellerSignup';
+import CustomerDashboard from './pages/CustomerDashboard';
+import SellerDashboard from './pages/SellerDashboard';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Default route redirects to login */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          
+          {/* Authentication routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup/customer" element={<CustomerSignup />} />
+          <Route path="/signup/seller" element={<SellerSignup />} />
+          
+          {/* Dashboard routes */}
+          <Route path="/customer/dashboard" element={<CustomerDashboard />} />
+          <Route path="/seller/dashboard" element={<SellerDashboard />} />
+          
+          {/* Catch all route */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

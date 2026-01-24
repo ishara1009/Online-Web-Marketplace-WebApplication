@@ -22,9 +22,9 @@ const productRoutes = require('./routes/product');
 const orderRoutes = require('./routes/order');
 
 // API routes
-app.use('/api/v1', authRoutes);
-app.use('/api/v1', productRoutes);
-app.use('/api/v1', orderRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Health check endpoint
 app.get('/', (req, res) => {

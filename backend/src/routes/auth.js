@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  registerUser,
+  registerCustomer,
+  registerSeller,
   loginUser,
   logoutUser,
   getUserProfile,
@@ -16,7 +17,11 @@ const {
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
-router.route('/register').post(registerUser);
+// Customer and Seller registration routes
+router.route('/register/customer').post(registerCustomer);
+router.route('/register/seller').post(registerSeller);
+
+// Common login route for both customer and seller
 router.route('/login').post(loginUser);
 router.route('/logout').get(logoutUser);
 

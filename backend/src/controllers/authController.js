@@ -3,15 +3,87 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
 
-// Register a user
-exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password } = req.body;
+// Register a customer
+exports.registerCustomer = catchAsyncErrors(async (req, res, next) => {
+  const { name, email, password, phone, address, gender } = req.body;
 
-  const user = await User.create({
+  // Check if user already exists
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return next(new ErrorHandler('Email already exists', 400));
+  }
+
+  const userData = {
     name,
     email,
     password,
-  });
+    phone,
+    address,
+    gender,
+    role: 'customer',
+  };
+
+  // Handle avatar upload if provided
+  if (req.body.avatar) {
+    userData.avatar = {
+      public_id: 'customer_avatar_' + Date.now(),
+      url: req.body.avatar,
+    };
+  }
+
+  const user = await User.create(userData);
+
+  sendToken(user, 201, res);
+});
+
+// Register a seller
+exports.registerSeller = catchAsyncErrors(async (req, res, next) => {
+  const {
+    ownerName,
+    shopName,
+    email,
+    password,
+    phone,
+    businessAddress,
+    nicOrBusinessRegNo,
+    bankAccountOrPaymentMethod,
+    agreedToSellerPolicy,
+  } = req.body;
+
+  // Check if user already exists
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return next(new ErrorHandler('Email already exists', 400));
+  }
+
+  // Validate seller policy agreement
+  if (!agreedToSellerPolicy) {
+    return next(new ErrorHandler('You must agree to the seller policy', 400));
+  }
+
+  const userData = {
+    name: shopName, // Use shop name as the main name
+    email,
+    password,
+    phone,
+    ownerName,
+    shopName,
+    businessAddress,
+    nicOrBusinessRegNo,
+    bankAccountOrPaymentMethod,
+    agreedToSellerPolicy,
+    role: 'seller',
+  };
+
+  // Handle avatar upload if provided
+  if (req.body.avatar) {
+    userData.avatar = {
+      public_id: 'seller_avatar_' + Date.now(),
+      url: req.body.avatar,
+    };
+  }
+
+  const user = await User.create(userData);
 
   sendToken(user, 201, res);
 });
