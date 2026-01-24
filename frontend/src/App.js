@@ -7,6 +7,7 @@ import CustomerDashboard from './pages/CustomerDashboard';
 import SellerDashboard from './pages/SellerDashboard';
 import EditCustomerProfile from './pages/EditCustomerProfile';
 import CustomerSettings from './pages/CustomerSettings';
+import ProfileInformation from './pages/ProfileInformation';
 import './App.css';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/customer/dashboard" element={<CustomerDashboard />} />
           <Route path="/customer/edit-profile" element={<EditCustomerProfile />} />
           <Route path="/customer/settings" element={<CustomerSettings />} />
+          <Route path="/customer/profile-information" element={<ProfileInformation />} />
           <Route path="/seller/dashboard" element={<SellerDashboard />} />
           
           {/* Catch all route */}

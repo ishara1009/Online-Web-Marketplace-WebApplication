@@ -11,7 +11,7 @@ const CustomerSettings = () => {
       icon: '👤',
       title: 'Profile Information',
       description: 'Update your name, photo, and personal details',
-      path: '/customer/edit-profile',
+      path: '/customer/profile-information',
     },
     {
       id: 'security',
