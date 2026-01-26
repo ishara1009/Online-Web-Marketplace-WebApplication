@@ -74,7 +74,7 @@ const Login = () => {
     <div className="login-container" style={containerStyle}>
       <div className="login-card">
         <div className="login-header">
-          <h1>🔐 Login</h1>
+          <h1>Login</h1>
           <p>Welcome back! Please login to your account</p>
         </div>
 

@@ -1,5 +1,8 @@
 # 🛍️ Online Web Marketplace Application
 
+![Application Screenshot](images/image2.png)
+![Application Screenshot](images/image3.png)
+
 A full-stack MERN (MongoDB, Express, React, Node.js) web marketplace application with separate authentication and dashboards for Customers and Sellers.
 
 ## ✨ Features
