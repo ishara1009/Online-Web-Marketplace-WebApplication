@@ -86,11 +86,16 @@ const CustomerSignup = () => {
     }
   };
 
+  const containerStyle = {
+    background: `url(${process.env.PUBLIC_URL}/images/login-background.jpg) no-repeat center center fixed`,
+    backgroundSize: 'cover'
+  };
+
   return (
-    <div className="customer-signup-container">
+    <div className="customer-signup-container" style={containerStyle}>
       <div className="customer-signup-card">
         <div className="signup-header">
-          <h1>😊 Customer Signup</h1>
+          <h1>Customer Signup</h1>
           <p>Create your account and start shopping</p>
         </div>
 
