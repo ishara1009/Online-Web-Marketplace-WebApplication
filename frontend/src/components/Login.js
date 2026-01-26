@@ -65,8 +65,13 @@ const Login = () => {
     }
   };
 
+  const containerStyle = {
+    background: `url(${process.env.PUBLIC_URL}/images/login-background.jpg) no-repeat center center fixed`,
+    backgroundSize: 'cover'
+  };
+
   return (
-    <div className="login-container">
+    <div className="login-container" style={containerStyle}>
       <div className="login-card">
         <div className="login-header">
           <h1>🔐 Login</h1>
