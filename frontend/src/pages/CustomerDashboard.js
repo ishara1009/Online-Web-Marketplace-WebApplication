@@ -54,7 +54,7 @@ const CustomerDashboard = () => {
     <div className="customer-dashboard">
       <nav className="dashboard-nav">
         <div className="nav-brand">
-          <h2>🛍️ Customer Portal</h2>
+          <h2> Customer Portal</h2>
         </div>
         <div className="nav-actions">
           <button onClick={handleLogout} className="logout-btn">
@@ -79,32 +79,32 @@ const CustomerDashboard = () => {
 
           <ul className="sidebar-menu">
             <li className="menu-item active">
-              <span>📊</span> Dashboard
+              <span></span> Dashboard
             </li>
             <li className="menu-item">
-              <span>🛒</span> My Orders
+              <span></span> My Orders
             </li>
             <li className="menu-item">
-              <span>❤️</span> Wishlist
+              <span></span> Wishlist
             </li>
             <li className="menu-item">
-              <span>📍</span> Addresses
+              <span></span> Addresses
             </li>
             <li className="menu-item" onClick={handleSettings}>
-              <span>⚙️</span> Settings
+              <span></span> Settings
             </li>
           </ul>
         </aside>
 
         <main className="dashboard-main">
           <div className="welcome-section">
-            <h1>Welcome back, {user.name}! 😊</h1>
+            <h1>Welcome back, {user.name}! </h1>
             <p>Here's what's happening with your account today.</p>
           </div>
 
           <div className="stats-grid">
             <div className="stat-card">
-              <div className="stat-icon orders-icon">📦</div>
+              
               <div className="stat-content">
                 <h3>Total Orders</h3>
                 <p className="stat-number">0</p>
@@ -112,7 +112,7 @@ const CustomerDashboard = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon pending-icon">⏳</div>
+         
               <div className="stat-content">
                 <h3>Pending Orders</h3>
                 <p className="stat-number">0</p>
@@ -120,7 +120,7 @@ const CustomerDashboard = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon completed-icon">✅</div>
+          
               <div className="stat-content">
                 <h3>Completed Orders</h3>
                 <p className="stat-number">0</p>
@@ -128,7 +128,7 @@ const CustomerDashboard = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon wishlist-icon">❤️</div>
+      
               <div className="stat-content">
                 <h3>Wishlist Items</h3>
                 <p className="stat-number">0</p>
