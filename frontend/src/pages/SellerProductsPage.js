@@ -97,7 +97,7 @@ const SellerProductsPage = () => {
             className="add-product-btn"
             onClick={() => setShowAddForm(!showAddForm)}
           >
-            {showAddForm ? '✕ Cancel' : '➕ Add Product'}
+            {showAddForm ? 'Cancel' : 'Add Product'}
           </button>
         </div>
 
@@ -192,7 +192,7 @@ const SellerProductsPage = () => {
 
         {products.length === 0 ? (
           <div className="no-products">
-            <div className="no-products-icon">📦</div>
+            <div className="no-products-icon">NO</div>
             <h2>No products yet</h2>
             <p>Start adding products to your store!</p>
           </div>
@@ -225,8 +225,8 @@ const SellerProductsPage = () => {
                   </div>
 
                   <div className="product-stats">
-                    <span>⭐ {product.rating.toFixed(1)}</span>
-                    <span>👁️ {product.reviews} views</span>
+                    <span>{product.rating.toFixed(1)}</span>
+                    <span>{product.reviews} views</span>
                   </div>
 
                   <div className="product-actions">
@@ -234,13 +234,13 @@ const SellerProductsPage = () => {
                       className="edit-btn"
                       onClick={() => alert('Edit functionality coming soon!')}
                     >
-                      ✏️ Edit
+                      Edit
                     </button>
                     <button 
                       className="delete-btn"
                       onClick={() => deleteProduct(product._id)}
                     >
-                      🗑️ Delete
+                      Delete
                     </button>
                   </div>
                 </div>

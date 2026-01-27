@@ -37,7 +37,7 @@ const OrderSuccessPage = () => {
 
       <div className="success-container">
         <div className="success-card">
-          <div className="success-icon">✓</div>
+          <div className="success-icon">OK</div>
           <h1>Order Placed Successfully!</h1>
           <p className="success-message">
             Thank you for your purchase. Your order has been received and is being processed.
@@ -109,7 +109,7 @@ const OrderSuccessPage = () => {
           </div>
 
           <div className="email-notice">
-            📧 A confirmation email has been sent to your email address.
+            A confirmation email has been sent to your email address.
           </div>
         </div>
       </div>

@@ -87,7 +87,7 @@ const CartPage = () => {
 
         {cartItems.length === 0 ? (
           <div className="empty-cart">
-            <div className="empty-cart-icon">🛒</div>
+            <div className="empty-cart-icon">CART</div>
             <h2>Your cart is empty</h2>
             <p>Add some products to get started!</p>
             <button 
@@ -166,7 +166,7 @@ const CartPage = () => {
                       onClick={() => removeItem(item._id)}
                       title="Remove item"
                     >
-                      🗑️
+                      Remove
                     </button>
                   </div>
                 ))}
@@ -198,7 +198,7 @@ const CartPage = () => {
 
               {subtotal < 50 && (
                 <div className="shipping-notice">
-                  💡 Add ${(50 - subtotal).toFixed(2)} more for FREE shipping!
+                  Add ${(50 - subtotal).toFixed(2)} more for FREE shipping!
                 </div>
               )}
 
@@ -217,13 +217,13 @@ const CartPage = () => {
               </button>
 
               <div className="secure-checkout">
-                🔒 Secure Checkout
+                Secure Checkout
               </div>
 
               <div className="accepted-payments">
                 <p>We Accept:</p>
                 <div className="payment-icons">
-                  💳 💰 🏦
+                  CC
                 </div>
               </div>
             </div>

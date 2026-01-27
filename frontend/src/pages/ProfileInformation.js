@@ -41,7 +41,7 @@ const ProfileInformation = () => {
     <div className="profile-information">
       <nav className="profile-nav">
         <div className="nav-brand">
-          <h2>👤 Profile Information</h2>
+          <h2> Profile Information</h2>
         </div>
         <div className="nav-actions">
           <button onClick={handleBackToSettings} className="back-btn">
@@ -64,20 +64,20 @@ const ProfileInformation = () => {
             <span className="user-role-badge">Customer Account</span>
           </div>
           <button onClick={handleEditProfile} className="edit-profile-btn">
-            ✏️ Edit Profile
+             Edit Profile
           </button>
         </div>
 
         <div className="profile-content">
           <div className="info-section">
             <h3 className="section-title">
-              <span className="title-icon">👤</span>
+              <span className="title-icon"></span>
               Personal Information
             </h3>
             <div className="info-grid-modern">
               <div className="info-card">
                 <div className="info-card-icon">
-                  <span>📝</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">Full Name</div>
@@ -87,7 +87,7 @@ const ProfileInformation = () => {
 
               <div className="info-card">
                 <div className="info-card-icon">
-                  <span>📧</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">Email Address</div>
@@ -97,7 +97,7 @@ const ProfileInformation = () => {
 
               <div className="info-card">
                 <div className="info-card-icon">
-                  <span>📱</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">Phone Number</div>
@@ -107,7 +107,7 @@ const ProfileInformation = () => {
 
               <div className="info-card">
                 <div className="info-card-icon">
-                  <span>⚧</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">Gender</div>
@@ -117,7 +117,7 @@ const ProfileInformation = () => {
 
               <div className="info-card full-width">
                 <div className="info-card-icon">
-                  <span>📍</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">Address</div>
@@ -129,13 +129,13 @@ const ProfileInformation = () => {
 
           <div className="info-section">
             <h3 className="section-title">
-              <span className="title-icon">🔐</span>
+              <span className="title-icon"></span>
               Account Information
             </h3>
             <div className="info-grid-modern">
               <div className="info-card">
                 <div className="info-card-icon">
-                  <span>🎯</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">Account Type</div>
@@ -147,7 +147,7 @@ const ProfileInformation = () => {
 
               <div className="info-card">
                 <div className="info-card-icon">
-                  <span>📅</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">Member Since</div>
@@ -163,19 +163,19 @@ const ProfileInformation = () => {
 
               <div className="info-card">
                 <div className="info-card-icon">
-                  <span>✅</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">Account Status</div>
                   <div className="info-value">
-                    <span className="status-active">● Active</span>
+                    <span className="status-active"> Active</span>
                   </div>
                 </div>
               </div>
 
               <div className="info-card">
                 <div className="info-card-icon">
-                  <span>🆔</span>
+                  <span></span>
                 </div>
                 <div className="info-card-content">
                   <div className="info-label">User ID</div>
@@ -187,13 +187,13 @@ const ProfileInformation = () => {
 
           <div className="info-section">
             <h3 className="section-title">
-              <span className="title-icon">📊</span>
+              <span className="title-icon"></span>
               Activity Summary
             </h3>
             <div className="activity-grid-modern">
               <div className="activity-card-modern">
                 <div className="activity-header">
-                  <div className="activity-icon-modern">📦</div>
+                  <div className="activity-icon-modern"></div>
                   <div className="activity-number">0</div>
                 </div>
                 <div className="activity-footer">
@@ -206,7 +206,7 @@ const ProfileInformation = () => {
 
               <div className="activity-card-modern">
                 <div className="activity-header">
-                  <div className="activity-icon-modern">❤️</div>
+                  <div className="activity-icon-modern"></div>
                   <div className="activity-number">0</div>
                 </div>
                 <div className="activity-footer">
@@ -219,7 +219,7 @@ const ProfileInformation = () => {
 
               <div className="activity-card-modern">
                 <div className="activity-header">
-                  <div className="activity-icon-modern">⭐</div>
+                  <div className="activity-icon-modern"></div>
                   <div className="activity-number">0</div>
                 </div>
                 <div className="activity-footer">
@@ -232,7 +232,7 @@ const ProfileInformation = () => {
 
               <div className="activity-card-modern">
                 <div className="activity-header">
-                  <div className="activity-icon-modern">💬</div>
+                  <div className="activity-icon-modern"></div>
                   <div className="activity-number">0</div>
                 </div>
                 <div className="activity-footer">

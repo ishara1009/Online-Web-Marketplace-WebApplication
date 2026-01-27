@@ -116,7 +116,7 @@ const EditCustomerProfile = () => {
     <div className="edit-profile-container">
       <div className="edit-profile-card">
         <div className="edit-profile-header">
-          <h1>✏️ Edit Profile</h1>
+          <h1> Edit Profile</h1>
           <p>Update your personal information</p>
           <Link to="/customer/dashboard" className="back-link">
             ← Back to Dashboard
@@ -133,7 +133,7 @@ const EditCustomerProfile = () => {
                 <img src={previewImage} alt="Profile Preview" />
               ) : (
                 <div className="placeholder-avatar">
-                  <span>📷</span>
+                  <span></span>
                 </div>
               )}
             </div>

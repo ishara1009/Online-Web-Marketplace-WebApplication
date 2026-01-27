@@ -16,6 +16,11 @@ import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import OrdersPage from './pages/OrdersPage';
 import SellerProductsPage from './pages/SellerProductsPage';
+import SellerOrdersPage from './pages/SellerOrdersPage';
+import SellerSalesPage from './pages/SellerSalesPage';
+import SellerAnalyticsPage from './pages/SellerAnalyticsPage';
+import SellerSettingsPage from './pages/SellerSettingsPage';
+import AddressesPage from './pages/AddressesPage';
 import './App.css';
 
 function App() {
@@ -36,11 +41,16 @@ function App() {
           <Route path="/customer/edit-profile" element={<EditCustomerProfile />} />
           <Route path="/customer/settings" element={<CustomerSettings />} />
           <Route path="/customer/profile-information" element={<ProfileInformation />} />
+          <Route path="/customer/addresses" element={<AddressesPage />} />
           
           {/* Seller Dashboard routes */}
           <Route path="/seller/dashboard" element={<SellerDashboard />} />
           <Route path="/seller/products" element={<SellerProductsPage />} />
           <Route path="/seller/products/add" element={<SellerProductsPage />} />
+          <Route path="/seller/orders" element={<SellerOrdersPage />} />
+          <Route path="/seller/sales" element={<SellerSalesPage />} />
+          <Route path="/seller/analytics" element={<SellerAnalyticsPage />} />
+          <Route path="/seller/settings" element={<SellerSettingsPage />} />
           
           {/* Shopping routes */}
           <Route path="/products" element={<ProductsPage />} />

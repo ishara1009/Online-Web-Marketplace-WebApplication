@@ -114,7 +114,7 @@ const SellerSignup = () => {
                 <img src={previewImage} alt="Profile Preview" />
               ) : (
                 <div className="placeholder-avatar">
-                  <span>🏪</span>
+                  <span>SHOP</span>
                 </div>
               )}
             </div>

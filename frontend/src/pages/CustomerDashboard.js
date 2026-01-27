@@ -54,7 +54,7 @@ const CustomerDashboard = () => {
     <div className="customer-dashboard">
       <nav className="dashboard-nav">
         <div className="nav-brand">
-          <h2> Customer Portal</h2>
+          <h2>Customer Portal</h2>
         </div>
         <div className="nav-actions">
           <button onClick={handleLogout} className="logout-btn">
@@ -78,27 +78,27 @@ const CustomerDashboard = () => {
           </div>
 
           <ul className="sidebar-menu">
-            <li className="menu-item active">
-              <span></span> Dashboard
+            <li className="menu-item active" onClick={() => navigate('/customer/dashboard')}>
+              Dashboard
             </li>
-            <li className="menu-item">
-              <span></span> My Orders
+            <li className="menu-item" onClick={() => navigate('/orders')}>
+              My Orders
             </li>
-            <li className="menu-item">
-              <span></span> Wishlist
+            <li className="menu-item" onClick={() => navigate('/wishlist')}>
+              Wishlist
             </li>
-            <li className="menu-item">
-              <span></span> Addresses
+            <li className="menu-item" onClick={() => navigate('/customer/addresses')}>
+              Addresses
             </li>
             <li className="menu-item" onClick={handleSettings}>
-              <span></span> Settings
+              Settings
             </li>
           </ul>
         </aside>
 
         <main className="dashboard-main">
           <div className="welcome-section">
-            <h1>Welcome back, {user.name}! </h1>
+            <h1>Welcome back, {user.name}!</h1>
             <p>Here's what's happening with your account today.</p>
           </div>
 
@@ -166,14 +166,14 @@ const CustomerDashboard = () => {
             <div className="info-card">
               <h3>Quick Actions</h3>
               <div className="quick-actions">
-                <button className="action-btn primary">
-                  🛍️ Start Shopping
+                <button className="action-btn primary" onClick={() => navigate('/products')}>
+                  Start Shopping
                 </button>
-                <button className="action-btn secondary">
-                  📝 Track Orders
+                <button className="action-btn secondary" onClick={() => navigate('/orders')}>
+                  Track Orders
                 </button>
                 <button className="action-btn secondary" onClick={handleEditProfile}>
-                  👤 Edit Profile
+                  Edit Profile
                 </button>
               </div>
             </div>

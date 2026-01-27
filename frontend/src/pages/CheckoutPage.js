@@ -133,7 +133,7 @@ const CheckoutPage = () => {
             <div className="checkout-forms">
               {/* Shipping Information */}
               <div className="form-section">
-                <h2>📦 Shipping Information</h2>
+                <h2>Shipping Information</h2>
                 <div className="form-grid">
                   <div className="form-group full-width">
                     <label>Full Name *</label>
@@ -228,7 +228,7 @@ const CheckoutPage = () => {
 
               {/* Payment Information */}
               <div className="form-section">
-                <h2>💳 Payment Information</h2>
+                <h2>Payment Information</h2>
                 
                 <div className="payment-methods">
                   <label className={`payment-method ${formData.paymentMethod === 'card' ? 'active' : ''}`}>
@@ -373,7 +373,7 @@ const CheckoutPage = () => {
                 </button>
 
                 <div className="secure-notice">
-                  🔒 Your information is secure
+                  Your information is secure
                 </div>
               </div>
             </div>

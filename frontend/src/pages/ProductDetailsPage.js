@@ -184,13 +184,13 @@ const ProductDetailsPage = () => {
 
             <div className="product-meta">
               <div className="rating-section">
-                <span className="rating">⭐ {product.rating}</span>
+                <span className="rating">{product.rating}</span>
                 <span className="reviews-count">({product.reviews} reviews)</span>
               </div>
               <div className="seller-info">
                 <span>Sold by:</span>
                 <strong>{product.seller.name}</strong>
-                <span className="seller-rating">⭐ {product.seller.rating}</span>
+                <span className="seller-rating">{product.seller.rating}</span>
               </div>
             </div>
 
@@ -206,9 +206,9 @@ const ProductDetailsPage = () => {
 
             <div className="stock-status">
               {product.stock > 0 ? (
-                <span className="in-stock">✓ In Stock ({product.stock} available)</span>
+                <span className="in-stock">In Stock ({product.stock} available)</span>
               ) : (
-                <span className="out-of-stock">✗ Out of Stock</span>
+                <span className="out-of-stock">Out of Stock</span>
               )}
             </div>
 
@@ -223,7 +223,7 @@ const ProductDetailsPage = () => {
 
             <div className="action-buttons">
               <button className="add-to-cart-btn" onClick={addToCart}>
-                🛒 Add to Cart
+                Add to Cart
               </button>
               <button className="buy-now-btn" onClick={buyNow}>
                 Buy Now
@@ -234,7 +234,7 @@ const ProductDetailsPage = () => {
               <h3>Key Features:</h3>
               <ul>
                 {product.features.map((feature, index) => (
-                  <li key={index}>✓ {feature}</li>
+                  <li key={index}>{feature}</li>
                 ))}
               </ul>
             </div>
@@ -293,7 +293,7 @@ const ProductDetailsPage = () => {
                 <div className="reviews-summary">
                   <div className="overall-rating">
                     <h2>{product.rating}</h2>
-                    <div className="stars">⭐⭐⭐⭐⭐</div>
+                    <div className="stars">*****</div>
                     <p>{product.reviews} reviews</p>
                   </div>
                 </div>
@@ -304,13 +304,13 @@ const ProductDetailsPage = () => {
                       <div className="review-header">
                         <div className="reviewer-info">
                           <strong>{review.user}</strong>
-                          <span className="review-rating">{'⭐'.repeat(review.rating)}</span>
+                          <span className="review-rating">{''.repeat(review.rating)}</span>
                         </div>
                         <span className="review-date">{review.date}</span>
                       </div>
                       <p className="review-comment">{review.comment}</p>
                       <div className="review-footer">
-                        <button className="helpful-btn">👍 Helpful ({review.helpful})</button>
+                        <button className="helpful-btn">Helpful ({review.helpful})</button>
                       </div>
                     </div>
                   ))}

@@ -108,7 +108,7 @@ const CustomerSignup = () => {
                 <img src={previewImage} alt="Profile Preview" />
               ) : (
                 <div className="placeholder-avatar">
-                  <span>📷</span>
+                  <span>IMG</span>
                 </div>
               )}
             </div>

@@ -204,7 +204,7 @@ const ProductsPage = () => {
               className="close-filters"
               onClick={() => setShowFilters(false)}
             >
-              ✕
+              X
             </button>
           </div>
 
@@ -238,7 +238,7 @@ const ProductsPage = () => {
                     checked={filters.rating === rating.toString()}
                     onChange={() => handleFilterChange('rating', rating.toString())}
                   />
-                  <span>{rating}★ & above</span>
+                  <span>{rating}* & above</span>
                 </label>
               ))}
             </div>
@@ -264,7 +264,7 @@ const ProductsPage = () => {
                 className="filter-toggle-btn"
                 onClick={() => setShowFilters(!showFilters)}
               >
-                🎚️ Filters
+                Filters
               </button>
 
               <select 
@@ -312,7 +312,7 @@ const ProductsPage = () => {
                     </h3>
 
                     <div className="product-rating">
-                      <span className="rating">⭐ {product.rating}</span>
+                      <span className="rating">{product.rating}</span>
                       <span className="reviews">({product.reviews})</span>
                     </div>
 
@@ -332,7 +332,7 @@ const ProductsPage = () => {
                         className="add-to-cart-btn"
                         onClick={() => addToCart(product)}
                       >
-                        🛒 Add to Cart
+                        Add to Cart
                       </button>
                       <button 
                         className="view-details-btn"

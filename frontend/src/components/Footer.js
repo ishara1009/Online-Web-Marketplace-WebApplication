@@ -8,13 +8,13 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-container">
           <div className="footer-section">
-            <h3>🛒 ShopHub</h3>
+            <h3>ShopHub</h3>
             <p>Your trusted online marketplace for quality products and great deals.</p>
             <div className="social-links">
-              <a href="#facebook" aria-label="Facebook">📘</a>
-              <a href="#twitter" aria-label="Twitter">🐦</a>
-              <a href="#instagram" aria-label="Instagram">📷</a>
-              <a href="#youtube" aria-label="YouTube">📺</a>
+              <a href="#facebook" aria-label="Facebook">FB</a>
+              <a href="#twitter" aria-label="Twitter">TW</a>
+              <a href="#instagram" aria-label="Instagram">IG</a>
+              <a href="#youtube" aria-label="YouTube">YT</a>
             </div>
           </div>
 
@@ -65,7 +65,7 @@ const Footer = () => {
             <div className="payment-methods">
               <span>We Accept:</span>
               <div className="payment-icons">
-                💳 🏦 💰
+                CC
               </div>
             </div>
           </div>

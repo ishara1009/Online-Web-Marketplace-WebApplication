@@ -52,7 +52,7 @@ const Header = () => {
       <div className="header-top">
         <div className="container">
           <div className="top-left">
-            <span>📞 Customer Support: 1-800-123-4567</span>
+            <span>Customer Support: 1-800-123-4567</span>
           </div>
           <div className="top-right">
             {user ? (
@@ -78,7 +78,7 @@ const Header = () => {
           <div className="header-content">
             {/* Logo */}
             <div className="logo" onClick={() => navigate('/')}>
-              <h1>🛒 ShopHub</h1>
+              <h1>ShopHub</h1>
             </div>
 
             {/* Search Bar */}
@@ -90,7 +90,7 @@ const Header = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button type="submit">
-                <i className="search-icon">🔍</i>
+                <i className="search-icon"></i>
               </button>
             </form>
 
@@ -102,9 +102,9 @@ const Header = () => {
                     className="user-btn"
                     onClick={() => setShowUserMenu(!showUserMenu)}
                   >
-                    <i className="icon">👤</i>
+                    <i className="icon"></i>
                     <span>{user.firstName}</span>
-                    <i className="arrow">▼</i>
+                    <i className="arrow"></i>
                   </button>
                   {showUserMenu && (
                     <div className="user-dropdown">
@@ -120,14 +120,14 @@ const Header = () => {
               )}
 
               <Link to="/cart" className="cart-btn">
-                <i className="icon">🛒</i>
+                <i className="icon"></i>
                 <span>Cart</span>
                 {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
               </Link>
 
               {user?.role === 'seller' && (
                 <Link to="/seller/products/add" className="sell-btn">
-                  <i className="icon">➕</i>
+                  <i className="icon"></i>
                   Sell
                 </Link>
               )}
@@ -138,7 +138,7 @@ const Header = () => {
               className="mobile-menu-toggle"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
             >
-              ☰
+              Menu
             </button>
           </div>
         </div>
@@ -172,12 +172,12 @@ const Header = () => {
               className="close-btn"
               onClick={() => setShowMobileMenu(false)}
             >
-              ✕
+              X
             </button>
             {user ? (
               <>
                 <div className="mobile-user-info">
-                  <i className="icon">👤</i>
+                  <i className="icon"></i>
                   <span>Hello, {user.firstName}</span>
                 </div>
                 <Link to={user.role === 'seller' ? '/seller/dashboard' : '/customer/dashboard'} onClick={() => setShowMobileMenu(false)}>

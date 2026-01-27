@@ -52,7 +52,7 @@ const OrdersPage = () => {
           <div className="loading">Loading orders...</div>
         ) : orders.length === 0 ? (
           <div className="no-orders">
-            <div className="no-orders-icon">📦</div>
+            <div className="no-orders-icon">NO</div>
             <h2>No orders yet</h2>
             <p>Start shopping to see your orders here!</p>
             <button 

@@ -8,42 +8,42 @@ const CustomerSettings = () => {
   const settingsOptions = [
     {
       id: 'profile',
-      icon: '👤',
+      icon: '',
       title: 'Profile Information',
       description: 'Update your name, photo, and personal details',
       path: '/customer/profile-information',
     },
     {
       id: 'security',
-      icon: '🔒',
+      icon: '',
       title: 'Account Security',
       description: 'Change password and security settings',
       path: '/customer/settings/security',
     },
     {
       id: 'address',
-      icon: '📍',
+      icon: '',
       title: 'Address Book',
       description: 'Manage your shipping and billing addresses',
       path: '/customer/settings/addresses',
     },
     {
       id: 'payment',
-      icon: '💳',
+      icon: '',
       title: 'Payment Methods',
       description: 'Add or remove payment methods',
       path: '/customer/settings/payment',
     },
     {
       id: 'notifications',
-      icon: '🔔',
+      icon: '',
       title: 'Notifications',
       description: 'Manage email and push notifications',
       path: '/customer/settings/notifications',
     },
     {
       id: 'privacy',
-      icon: '🛡️',
+      icon: '',
       title: 'Privacy',
       description: 'Control your privacy and data settings',
       path: '/customer/settings/privacy',
@@ -62,7 +62,7 @@ const CustomerSettings = () => {
     <div className="customer-settings">
       <nav className="settings-nav">
         <div className="nav-brand">
-          <h2>⚙️ Settings</h2>
+          <h2> Settings</h2>
         </div>
         <div className="nav-actions">
           <button onClick={handleBackToDashboard} className="back-btn">

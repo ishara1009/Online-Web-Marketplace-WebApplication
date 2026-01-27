@@ -41,7 +41,7 @@ const SellerDashboard = () => {
     <div className="seller-dashboard">
       <nav className="dashboard-nav">
         <div className="nav-brand">
-          <h2>🏪 Seller Portal</h2>
+          <h2> Seller Portal</h2>
         </div>
         <div className="nav-actions">
           <button onClick={handleLogout} className="logout-btn">
@@ -62,36 +62,36 @@ const SellerDashboard = () => {
           </div>
 
           <ul className="sidebar-menu">
-            <li className="menu-item active">
-              <span>📊</span> Dashboard
+            <li className="menu-item active" onClick={() => navigate('/seller/dashboard')}>
+              <span></span> Dashboard
             </li>
-            <li className="menu-item">
-              <span>📦</span> Products
+            <li className="menu-item" onClick={() => navigate('/seller/products')}>
+              <span></span> Products
             </li>
-            <li className="menu-item">
-              <span>🛒</span> Orders
+            <li className="menu-item" onClick={() => navigate('/seller/orders')}>
+              <span></span> Orders
             </li>
-            <li className="menu-item">
-              <span>💰</span> Sales
+            <li className="menu-item" onClick={() => navigate('/seller/sales')}>
+              <span></span> Sales
             </li>
-            <li className="menu-item">
-              <span>📈</span> Analytics
+            <li className="menu-item" onClick={() => navigate('/seller/analytics')}>
+              <span></span> Analytics
             </li>
-            <li className="menu-item">
-              <span>⚙️</span> Settings
+            <li className="menu-item" onClick={() => navigate('/seller/settings')}>
+              <span></span> Settings
             </li>
           </ul>
         </aside>
 
         <main className="dashboard-main">
           <div className="welcome-section">
-            <h1>Welcome, {user.shopName || user.name}! 🏪</h1>
+            <h1>Welcome, {user.shopName || user.name}! </h1>
             <p>Manage your store and grow your business.</p>
           </div>
 
           <div className="stats-grid">
             <div className="stat-card">
-              <div className="stat-icon products-icon">📦</div>
+              <div className="stat-icon products-icon"></div>
               <div className="stat-content">
                 <h3>Total Products</h3>
                 <p className="stat-number">0</p>
@@ -99,7 +99,7 @@ const SellerDashboard = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon orders-icon">🛒</div>
+              <div className="stat-icon orders-icon"></div>
               <div className="stat-content">
                 <h3>Total Orders</h3>
                 <p className="stat-number">0</p>
@@ -107,7 +107,7 @@ const SellerDashboard = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon revenue-icon">💰</div>
+              <div className="stat-icon revenue-icon"></div>
               <div className="stat-content">
                 <h3>Revenue</h3>
                 <p className="stat-number">$0</p>
@@ -115,7 +115,7 @@ const SellerDashboard = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon rating-icon">⭐</div>
+              <div className="stat-icon rating-icon"></div>
               <div className="stat-content">
                 <h3>Rating</h3>
                 <p className="stat-number">0.0</p>
@@ -161,17 +161,17 @@ const SellerDashboard = () => {
             <div className="info-card">
               <h3>Quick Actions</h3>
               <div className="quick-actions">
-                <button className="action-btn primary">
-                  ➕ Add New Product
+                <button className="action-btn primary" onClick={() => navigate('/seller/products')}>
+                   Add New Product
                 </button>
-                <button className="action-btn secondary">
-                  📋 View Orders
+                <button className="action-btn secondary" onClick={() => navigate('/seller/orders')}>
+                   View Orders
                 </button>
-                <button className="action-btn secondary">
-                  📊 Sales Report
+                <button className="action-btn secondary" onClick={() => navigate('/seller/sales')}>
+                   Sales Report
                 </button>
-                <button className="action-btn secondary">
-                  👤 Edit Profile
+                <button className="action-btn secondary" onClick={() => navigate('/seller/settings')}>
+                   Edit Profile
                 </button>
               </div>
             </div>
@@ -181,7 +181,7 @@ const SellerDashboard = () => {
             <h3>Recent Activity</h3>
             <div className="activity-list">
               <div className="activity-item">
-                <div className="activity-icon">📦</div>
+                <div className="activity-icon"></div>
                 <div className="activity-content">
                   <p className="activity-title">No products yet</p>
                   <p className="activity-time">Start adding products to your store</p>
