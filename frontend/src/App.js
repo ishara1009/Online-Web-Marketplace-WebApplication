@@ -9,6 +9,13 @@ import SellerDashboard from './pages/SellerDashboard';
 import EditCustomerProfile from './pages/EditCustomerProfile';
 import CustomerSettings from './pages/CustomerSettings';
 import ProfileInformation from './pages/ProfileInformation';
+import ProductsPage from './pages/ProductsPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import OrderSuccessPage from './pages/OrderSuccessPage';
+import OrdersPage from './pages/OrdersPage';
+import SellerProductsPage from './pages/SellerProductsPage';
 import './App.css';
 
 function App() {
@@ -24,15 +31,28 @@ function App() {
           <Route path="/signup/customer" element={<CustomerSignup />} />
           <Route path="/signup/seller" element={<SellerSignup />} />
           
-          {/* Dashboard routes */}
+          {/* Customer Dashboard routes */}
           <Route path="/customer/dashboard" element={<CustomerDashboard />} />
           <Route path="/customer/edit-profile" element={<EditCustomerProfile />} />
           <Route path="/customer/settings" element={<CustomerSettings />} />
           <Route path="/customer/profile-information" element={<ProfileInformation />} />
+          
+          {/* Seller Dashboard routes */}
           <Route path="/seller/dashboard" element={<SellerDashboard />} />
+          <Route path="/seller/products" element={<SellerProductsPage />} />
+          <Route path="/seller/products/add" element={<SellerProductsPage />} />
+          
+          {/* Shopping routes */}
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-success" element={<OrderSuccessPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/wishlist" element={<OrdersPage />} />
           
           {/* Catch all route */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </Router>
