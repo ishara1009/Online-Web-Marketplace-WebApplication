@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
 import Login from './components/Login';
 import CustomerSignup from './components/CustomerSignup';
 import SellerSignup from './components/SellerSignup';
@@ -15,8 +16,8 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* Default route redirects to login */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Default route shows landing page */}
+          <Route path="/" element={<LandingPage />} />
           
           {/* Authentication routes */}
           <Route path="/login" element={<Login />} />

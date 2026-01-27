@@ -1,5 +1,6 @@
 #  Online Web Marketplace Application
 
+![Application Screenshot](images/image6.png)
 ![Application Screenshot](images/image2.png)
 ![Application Screenshot](images/image4.png)
 ![Application Screenshot](images/image5.png)
@@ -7,29 +8,29 @@
 
 A full-stack MERN (MongoDB, Express, React, Node.js) web marketplace application with separate authentication and dashboards for Customers and Sellers.
 
-## ✨ Features
+##  Features
 
-### 🔐 Authentication System
+###  Authentication System
 - **Unified Login** - Single login page for both Customers and Sellers
 - **Separate Signups** - Different registration flows for each user type
 - **Role-Based Access** - Automatic redirection to appropriate dashboards
 - **Secure** - JWT token authentication with password hashing
 
-### 👥 User Types
+###  User Types
 
-#### 😊 Customer
+####  Customer
 - Browse and purchase products
 - Manage orders and wishlist
 - Profile management
 - Order tracking
 
-#### 🏪 Seller
+####  Seller
 - Manage store and products
 - Process orders
 - View sales analytics
 - Business profile management
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Node.js (v14 or higher)
@@ -64,14 +65,14 @@ npm start
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:5000
 
-## 📚 Documentation
+## Documentation
 
 - **[Quick Start Guide](QUICK_START.md)** - Get up and running in 5 minutes
 - **[Setup Guide](SETUP_GUIDE.md)** - Detailed installation and configuration
 - **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Complete feature list
 - **[Project Structure](PROJECT_STRUCTURE.md)** - File organization and architecture
 
-## 🎨 User Interface
+##  User Interface
 
 ### Customer Flow
 1. Sign up at `/signup/customer` with:
@@ -99,7 +100,7 @@ npm start
    - Process orders
    - Business analytics
 
-## 🔧 Tech Stack
+##  Tech Stack
 
 ### Backend
 - Node.js & Express.js
@@ -116,7 +117,7 @@ npm start
 - CSS3 for styling
 - Responsive Design
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 ├── backend/           # Node.js + Express backend
@@ -139,7 +140,7 @@ npm start
 └── Documentation files
 ```
 
-## 🛣️ API Endpoints
+##  API Endpoints
 
 ### Authentication
 - `POST /api/auth/register/customer` - Customer signup
@@ -159,22 +160,22 @@ npm start
 - `POST /api/orders` - Create order
 - `PUT /api/orders/:id` - Update order status
 
-## 🎯 Features Implemented
+##  Features Implemented
 
-✅ User authentication (JWT-based)
-✅ Customer registration with personal details
-✅ Seller registration with business details
-✅ Unified login system
-✅ Role-based dashboard access
-✅ Customer dashboard with statistics
-✅ Seller dashboard with business metrics
-✅ Profile image/logo upload
-✅ Responsive design
-✅ Error handling
-✅ Form validation
-✅ Separate CSS files for each component
+ User authentication (JWT-based)
+ Customer registration with personal details
+ Seller registration with business details
+ Unified login system
+ Role-based dashboard access
+ Customer dashboard with statistics
+ Seller dashboard with business metrics
+ Profile image/logo upload
+ Responsive design
+ Error handling
+ Form validation
+ Separate CSS files for each component
 
-## 🔜 Upcoming Features
+##  Upcoming Features
 
 - [ ] Product catalog and management
 - [ ] Shopping cart functionality
@@ -187,7 +188,7 @@ npm start
 - [ ] Admin panel
 - [ ] Real-time notifications
 
-## 🔒 Security Features
+##  Security Features
 
 - Password hashing with bcrypt
 - JWT token authentication
@@ -197,19 +198,19 @@ npm start
 - Role-based access control
 - Protected API routes
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📝 License
+##  License
 
 This project is licensed under the ISC License.
 
-## 👨‍💻 Author
+##  Author
 
 **Ishara**
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Built with MERN stack
 - UI inspired by modern e-commerce platforms
