@@ -19,7 +19,7 @@ const CustomerDashboard = () => {
 
     const parsedUser = JSON.parse(userData);
     
-    if (parsedUser.role !== 'customer') {
+    if (parsedUser.role !== 'user') {
       navigate('/login');
       return;
     }
@@ -39,11 +39,11 @@ const CustomerDashboard = () => {
   };
 
   const handleEditProfile = () => {
-    navigate('/customer/edit-profile');
+    navigate('/user/edit-profile');
   };
 
   const handleSettings = () => {
-    navigate('/customer/settings');
+    navigate('/user/settings');
   };
 
   if (!user) {
@@ -54,7 +54,7 @@ const CustomerDashboard = () => {
     <div className="customer-dashboard">
       <nav className="dashboard-nav">
         <div className="nav-brand">
-          <h2>Customer Portal</h2>
+          <h2>My Account</h2>
         </div>
         <div className="nav-actions">
           <button onClick={handleLogout} className="logout-btn">
@@ -74,11 +74,11 @@ const CustomerDashboard = () => {
             </div>
             <h3>{user.name}</h3>
             <p className="user-email">{user.email}</p>
-            <span className="user-badge customer-badge">Customer</span>
+            <span className="user-badge customer-badge">User</span>
           </div>
 
           <ul className="sidebar-menu">
-            <li className="menu-item active" onClick={() => navigate('/customer/dashboard')}>
+            <li className="menu-item active" onClick={() => navigate('/user/dashboard')}>
               Dashboard
             </li>
             <li className="menu-item" onClick={() => navigate('/orders')}>
@@ -87,7 +87,7 @@ const CustomerDashboard = () => {
             <li className="menu-item" onClick={() => navigate('/wishlist')}>
               Wishlist
             </li>
-            <li className="menu-item" onClick={() => navigate('/customer/addresses')}>
+            <li className="menu-item" onClick={() => navigate('/user/addresses')}>
               Addresses
             </li>
             <li className="menu-item" onClick={handleSettings}>

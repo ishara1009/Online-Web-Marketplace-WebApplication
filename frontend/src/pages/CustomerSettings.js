@@ -11,42 +11,42 @@ const CustomerSettings = () => {
       icon: '',
       title: 'Profile Information',
       description: 'Update your name, photo, and personal details',
-      path: '/customer/profile-information',
+      path: '/user/profile-information',
     },
     {
       id: 'security',
       icon: '',
       title: 'Account Security',
       description: 'Change password and security settings',
-      path: '/customer/settings/security',
+      path: '/user/settings/security',
     },
     {
       id: 'address',
       icon: '',
       title: 'Address Book',
       description: 'Manage your shipping and billing addresses',
-      path: '/customer/settings/addresses',
+      path: '/user/settings/addresses',
     },
     {
       id: 'payment',
       icon: '',
       title: 'Payment Methods',
       description: 'Add or remove payment methods',
-      path: '/customer/settings/payment',
+      path: '/user/settings/payment',
     },
     {
       id: 'notifications',
       icon: '',
       title: 'Notifications',
       description: 'Manage email and push notifications',
-      path: '/customer/settings/notifications',
+      path: '/user/settings/notifications',
     },
     {
       id: 'privacy',
       icon: '',
       title: 'Privacy',
       description: 'Control your privacy and data settings',
-      path: '/customer/settings/privacy',
+      path: '/user/settings/privacy',
     },
   ];
 
@@ -55,7 +55,7 @@ const CustomerSettings = () => {
   };
 
   const handleBackToDashboard = () => {
-    navigate('/customer/dashboard');
+    navigate('/user/dashboard');
   };
 
   return (

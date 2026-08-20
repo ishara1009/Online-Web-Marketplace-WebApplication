@@ -65,12 +65,14 @@
 .logo h1 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #ff6b35;
+  color: #0f172a;
   margin: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
+
+.logo h1 span { color: #2563eb; }
 
 /* Search Bar */
 .search-bar {

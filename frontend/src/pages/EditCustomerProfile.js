@@ -29,8 +29,8 @@ const EditCustomerProfile = () => {
 
     const parsedUser = JSON.parse(userData);
     
-    // Check if user is a customer
-    if (parsedUser.role !== 'customer') {
+    // Standard users can edit their profiles.
+    if (parsedUser.role !== 'user') {
       navigate('/login');
       return;
     }
@@ -95,7 +95,7 @@ const EditCustomerProfile = () => {
       if (response.data.success) {
         localStorage.setItem('user', JSON.stringify(response.data.user));
         setSuccess('Profile updated successfully!');
-        setTimeout(() => navigate('/customer/dashboard'), 1500);
+        setTimeout(() => navigate('/user/dashboard'), 1500);
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
@@ -105,7 +105,7 @@ const EditCustomerProfile = () => {
   };
 
   const handleCancel = () => {
-    navigate('/customer/dashboard');
+    navigate('/user/dashboard');
   };
 
   if (!user) {
@@ -118,7 +118,7 @@ const EditCustomerProfile = () => {
         <div className="edit-profile-header">
           <h1> Edit Profile</h1>
           <p>Update your personal information</p>
-          <Link to="/customer/dashboard" className="back-link">
+          <Link to="/user/dashboard" className="back-link">
             ← Back to Dashboard
           </Link>
         </div>

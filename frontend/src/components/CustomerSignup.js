@@ -65,7 +65,7 @@ const CustomerSignup = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/auth/register/customer', {
+      const response = await axios.post('/api/auth/register/user', {
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -95,7 +95,7 @@ const CustomerSignup = () => {
     <div className="customer-signup-container" style={containerStyle}>
       <div className="customer-signup-card">
         <div className="signup-header">
-          <h1>Customer Signup</h1>
+          <h1>Create Your Account</h1>
           <p>Create your account and start shopping</p>
         </div>
 

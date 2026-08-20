@@ -8,8 +8,8 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-container">
           <div className="footer-section">
-            <h3>ShopHub</h3>
-            <p>Your trusted online marketplace for quality products and great deals.</p>
+            <h3>TechMart</h3>
+            <p>Genuine electronics, trusted sellers, and better technology for everyday life.</p>
             <div className="social-links">
               <a href="#facebook" aria-label="Facebook">FB</a>
               <a href="#twitter" aria-label="Twitter">TW</a>
@@ -39,12 +39,12 @@ const Footer = () => {
           </div>
 
           <div className="footer-section">
-            <h4>Sell With Us</h4>
+            <h4>My Account</h4>
             <ul>
-              <li><Link to="/signup/seller">Become a Seller</Link></li>
-              <li><Link to="/seller-guide">Seller Guide</Link></li>
-              <li><Link to="/fees">Fees & Pricing</Link></li>
-              <li><Link to="/seller-support">Seller Support</Link></li>
+              <li><Link to="/signup">Create Account</Link></li>
+              <li><Link to="/login">Sign In</Link></li>
+              <li><Link to="/orders">My Orders</Link></li>
+              <li><Link to="/wishlist">Wishlist</Link></li>
             </ul>
           </div>
 
@@ -61,7 +61,7 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <div className="footer-container">
-            <p>&copy; 2026 ShopHub. All rights reserved.</p>
+            <p>&copy; 2026 TechMart (Pvt) Ltd. All Rights Reserved.</p>
             <div className="payment-methods">
               <span>We Accept:</span>
               <div className="payment-icons">

@@ -24,7 +24,7 @@ const AddressesPage = () => {
     }
 
     const parsedUser = JSON.parse(user);
-    if (parsedUser.role !== 'customer') {
+    if (parsedUser.role !== 'user') {
       navigate('/');
       return;
     }
@@ -85,7 +85,7 @@ const AddressesPage = () => {
   return (
     <div className="addresses-page">
       <div className="page-header">
-        <button className="back-btn" onClick={() => navigate('/customer/dashboard')}>
+        <button className="back-btn" onClick={() => navigate('/user/dashboard')}>
           Back to Dashboard
         </button>
         <h1>My Addresses</h1>

@@ -3,8 +3,8 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
 
-// Register a customer
-exports.registerCustomer = catchAsyncErrors(async (req, res, next) => {
+// Public registration always creates a standard user. Admins are provisioned separately.
+exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password, phone, address, gender } = req.body;
 
   // Check if user already exists
@@ -20,65 +20,13 @@ exports.registerCustomer = catchAsyncErrors(async (req, res, next) => {
     phone,
     address,
     gender,
-    role: 'customer',
+    role: 'user',
   };
 
   // Handle avatar upload if provided
   if (req.body.avatar) {
     userData.avatar = {
-      public_id: 'customer_avatar_' + Date.now(),
-      url: req.body.avatar,
-    };
-  }
-
-  const user = await User.create(userData);
-
-  sendToken(user, 201, res);
-});
-
-// Register a seller
-exports.registerSeller = catchAsyncErrors(async (req, res, next) => {
-  const {
-    ownerName,
-    shopName,
-    email,
-    password,
-    phone,
-    businessAddress,
-    nicOrBusinessRegNo,
-    bankAccountOrPaymentMethod,
-    agreedToSellerPolicy,
-  } = req.body;
-
-  // Check if user already exists
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    return next(new ErrorHandler('Email already exists', 400));
-  }
-
-  // Validate seller policy agreement
-  if (!agreedToSellerPolicy) {
-    return next(new ErrorHandler('You must agree to the seller policy', 400));
-  }
-
-  const userData = {
-    name: shopName, // Use shop name as the main name
-    email,
-    password,
-    phone,
-    ownerName,
-    shopName,
-    businessAddress,
-    nicOrBusinessRegNo,
-    bankAccountOrPaymentMethod,
-    agreedToSellerPolicy,
-    role: 'seller',
-  };
-
-  // Handle avatar upload if provided
-  if (req.body.avatar) {
-    userData.avatar = {
-      public_id: 'seller_avatar_' + Date.now(),
+      public_id: 'user_avatar_' + Date.now(),
       url: req.body.avatar,
     };
   }
@@ -176,6 +124,14 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('+password');
 
+  if (!req.body.oldPassword || !req.body.password) {
+    return next(new ErrorHandler('Current password and new password are required', 400));
+  }
+
+  if (req.body.password.length < 6) {
+    return next(new ErrorHandler('New password must be at least 6 characters', 400));
+  }
+
   // Check previous password
   const isMatched = await user.comparePassword(req.body.oldPassword);
 
@@ -187,6 +143,38 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   await user.save();
 
   sendToken(user, 200, res);
+});
+
+// Admin: Create another admin account. This endpoint is never public.
+exports.createAdmin = catchAsyncErrors(async (req, res, next) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return next(new ErrorHandler('Name, email, and password are required', 400));
+  }
+
+  if (password.length < 6) {
+    return next(new ErrorHandler('Password must be at least 6 characters', 400));
+  }
+
+  const existingUser = await User.findOne({ email: email.toLowerCase() });
+  if (existingUser) {
+    return next(new ErrorHandler('An account with this email already exists', 400));
+  }
+
+  const admin = await User.create({
+    name,
+    email: email.toLowerCase(),
+    password,
+    role: 'admin',
+    isVerified: true,
+  });
+
+  res.status(201).json({
+    success: true,
+    message: 'Admin account created successfully',
+    admin: { id: admin._id, name: admin.name, email: admin.email, role: admin.role },
+  });
 });
 
 // Admin: Get all users

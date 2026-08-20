@@ -11,10 +11,15 @@ const sendToken = (user, statusCode, res) => {
     httpOnly: true,
   };
 
+  const safeUser = user.toObject ? user.toObject() : { ...user };
+  delete safeUser.password;
+  delete safeUser.resetPasswordToken;
+  delete safeUser.resetPasswordExpire;
+
   res.status(statusCode).cookie('token', token, options).json({
     success: true,
     token,
-    user,
+    user: safeUser,
   });
 };
 

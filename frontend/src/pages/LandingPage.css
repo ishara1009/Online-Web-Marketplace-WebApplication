@@ -383,3 +383,20 @@
     padding: 0 1rem;
   }
 }
+
+/* TechMart brand refresh */
+.landing-page { background:#f8fafc; color:#0f172a; font-family:'Segoe UI',Arial,sans-serif; }
+.landing-page .container { max-width:1180px; }
+.landing-header { background:rgba(255,255,255,.96); border-bottom:1px solid #e2e8f0; box-shadow:0 4px 20px rgba(15,23,42,.05); backdrop-filter:blur(12px); }
+.landing-header .logo { display:flex; align-items:center; gap:8px; color:#0f172a; letter-spacing:-.04em; }
+.landing-header .logo > span:last-child,.landing-footer .footer-section h3 { color:#2563eb; }
+.brand-box { display:inline-grid; place-items:center; width:34px; height:34px; border-radius:9px; background:#2563eb; color:#fff!important; font-size:20px; box-shadow:0 8px 20px rgba(37,99,235,.24); }
+.nav-btn { color:#475569; }.nav-btn:hover{color:#2563eb}.nav-btn-primary{background:#2563eb;color:#fff;border-radius:9px}.nav-btn-primary:hover{background:#1d4ed8}
+.hero-section { position:relative; overflow:hidden; padding:7rem 0; color:#0f172a; text-align:left; background:radial-gradient(circle at 78% 40%,#bfdbfe 0,transparent 28%),linear-gradient(135deg,#f8fbff,#eaf2ff); }
+.hero-section:after { content:'E'; position:absolute; right:8%; top:50%; transform:translateY(-50%); color:rgba(37,99,235,.08); font-size:390px; line-height:1; font-weight:900; }
+.hero-content { position:relative; z-index:1; max-width:760px; margin:0; }
+.hero-title { max-width:680px; font-size:clamp(3rem,6vw,5rem); line-height:1.04; letter-spacing:-.055em; }
+.hero-title span { color:#2563eb; }.hero-subtitle{max-width:620px;color:#526176;font-size:1.1rem;font-weight:400}.hero-buttons{justify-content:flex-start}.btn-start{background:#2563eb;color:#fff;border-radius:10px;box-shadow:0 12px 28px rgba(37,99,235,.24)}.btn-signin{color:#1e293b;border-color:#cbd5e1;background:#fff;border-radius:10px}.btn-signin:hover{color:#2563eb;border-color:#2563eb}
+.features-section { margin:0; padding:5rem 0; background:#fff; }.features-grid{grid-template-columns:repeat(3,1fr);gap:1rem}.feature-card{padding:2rem;text-align:left;background:#fff;border-color:#e2e8f0;border-radius:14px}.feature-card:hover{border-color:#93c5fd;box-shadow:0 16px 35px rgba(15,23,42,.08)}.feature-icon{display:grid;place-items:center;width:44px;height:44px;margin-bottom:1.25rem;border-radius:10px;background:#eff6ff;color:#2563eb;font-size:1.4rem;font-weight:800}.feature-card h3{font-size:1.15rem;color:#0f172a}.feature-card p{color:#64748b;font-size:.9rem}
+.cta-section{background:#0f172a;padding:5rem 0}.cta-title{letter-spacing:-.035em}.btn-cta-primary{color:#fff;background:#2563eb;border-radius:10px}.btn-cta-primary:hover{color:#fff;background:#3b82f6}.btn-cta-secondary{border-radius:10px}.landing-footer{background:#080f1d}.landing-footer .footer-content{grid-template-columns:2fr 1fr 1fr}.landing-footer .footer-section h4{color:#e2e8f0}.landing-footer .footer-bottom{border-color:#1e293b}
+@media(max-width:768px){.hero-section{text-align:center;padding:5rem 0}.hero-buttons{justify-content:center}.hero-section:after{font-size:250px;right:50%;transform:translate(50%,-50%)}.features-grid{grid-template-columns:1fr}.feature-card{text-align:center}.feature-icon{margin-left:auto;margin-right:auto}.landing-header .nav-wrapper{flex-direction:row}.landing-footer .footer-content{grid-template-columns:1fr 1fr}}

@@ -50,10 +50,8 @@ const Login = () => {
         localStorage.setItem('user', JSON.stringify(response.data.user));
 
         // Redirect based on user role
-        if (response.data.user.role === 'customer') {
-          navigate('/customer/dashboard');
-        } else if (response.data.user.role === 'seller') {
-          navigate('/seller/dashboard');
+        if (response.data.user.role === 'user') {
+          navigate('/user/dashboard');
         } else if (response.data.user.role === 'admin') {
           navigate('/admin/dashboard');
         }
@@ -72,10 +70,12 @@ const Login = () => {
 
   return (
     <div className="login-container" style={containerStyle}>
+      <Link to="/" className="login-brand"><span>T</span>Tech<strong>Mart</strong></Link>
       <div className="login-card">
         <div className="login-header">
-          <h1>Login</h1>
-          <p>Welcome back! Please login to your account</p>
+          <span className="login-kicker">Welcome back</span>
+          <h1>Sign in to TechMart</h1>
+          <p>Access your orders, saved items, and exclusive deals.</p>
         </div>
 
         {successMessage && <div className="success-message">{successMessage}</div>}
@@ -126,18 +126,15 @@ const Login = () => {
           </div>
 
           <button type="submit" className="login-button" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 
         <div className="signup-links">
           <p>Don't have an account?</p>
           <div className="signup-buttons">
-            <Link to="/signup/customer" className="signup-link customer-link">
-              Sign up as Customer
-            </Link>
-            <Link to="/signup/seller" className="signup-link seller-link">
-              Sign up as Seller
+            <Link to="/signup" className="signup-link customer-link">
+              Create a user account
             </Link>
           </div>
         </div>

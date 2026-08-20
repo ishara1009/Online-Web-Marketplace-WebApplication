@@ -4,12 +4,20 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  flex-direction: column;
+  gap: 18px;
+  background-color: #0f172a;
 }
+
+.login-brand { display:flex; align-items:center; gap:8px; color:#fff; text-decoration:none; font-size:22px; font-weight:800; }
+.login-brand > span { display:grid; place-items:center; width:34px; height:34px; border-radius:9px; background:#2563eb; }
+.login-brand strong { color:#60a5fa; }
+.login-kicker { color:#2563eb; font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
 
 .login-card {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
   padding: 40px;
   width: 100%;
   max-width: 450px;
@@ -34,7 +42,7 @@
 
 .login-header h1 {
   font-size: 32px;
-  color: #333;
+  color: #0f172a;
   margin-bottom: 10px;
 }
 
@@ -92,8 +100,8 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .form-options {
@@ -131,11 +139,11 @@
 }
 
 .login-button {
-  background: #ff8542;
+  background: #2563eb;
   color: white;
   padding: 14px;
   border: none;
-  border-radius: 6px;
+  border-radius: 9px;
   font-size: 16px;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -144,7 +152,7 @@
 
 .login-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255, 133, 66, 0.4);
+  box-shadow: 0 5px 20px rgba(37, 99, 235, 0.35);
 }
 
 .login-button:disabled {

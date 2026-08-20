@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  registerCustomer,
-  registerSeller,
+  registerUser,
   loginUser,
   logoutUser,
   getUserProfile,
   updatePassword,
+  createAdmin,
   updateProfile,
   getAllUsers,
   getUserDetails,
@@ -17,11 +17,10 @@ const {
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
-// Customer and Seller registration routes
-router.route('/register/customer').post(registerCustomer);
-router.route('/register/seller').post(registerSeller);
+// Only standard users can self-register. Admin accounts are provisioned by script.
+router.route('/register/user').post(registerUser);
 
-// Common login route for both customer and seller
+// Common login route for users and admins
 router.route('/login').post(loginUser);
 router.route('/logout').get(logoutUser);
 
@@ -32,6 +31,10 @@ router.route('/me/update').put(isAuthenticatedUser, updateProfile);
 router
   .route('/admin/users')
   .get(isAuthenticatedUser, authorizeRoles('admin'), getAllUsers);
+
+router
+  .route('/admin/create')
+  .post(isAuthenticatedUser, authorizeRoles('admin'), createAdmin);
 
 router
   .route('/admin/user/:id')

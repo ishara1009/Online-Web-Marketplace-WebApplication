@@ -1,11 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
+import TechMartLandingPage from './pages/TechMartLandingPage';
 import Login from './components/Login';
 import CustomerSignup from './components/CustomerSignup';
-import SellerSignup from './components/SellerSignup';
 import CustomerDashboard from './pages/CustomerDashboard';
-import SellerDashboard from './pages/SellerDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import EditCustomerProfile from './pages/EditCustomerProfile';
 import CustomerSettings from './pages/CustomerSettings';
 import ProfileInformation from './pages/ProfileInformation';
@@ -15,11 +14,6 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import OrdersPage from './pages/OrdersPage';
-import SellerProductsPage from './pages/SellerProductsPage';
-import SellerOrdersPage from './pages/SellerOrdersPage';
-import SellerSalesPage from './pages/SellerSalesPage';
-import SellerAnalyticsPage from './pages/SellerAnalyticsPage';
-import SellerSettingsPage from './pages/SellerSettingsPage';
 import AddressesPage from './pages/AddressesPage';
 import './App.css';
 
@@ -29,28 +23,24 @@ function App() {
       <div className="App">
         <Routes>
           {/* Default route shows landing page */}
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<TechMartLandingPage />} />
           
           {/* Authentication routes */}
           <Route path="/login" element={<Login />} />
-          <Route path="/signup/customer" element={<CustomerSignup />} />
-          <Route path="/signup/seller" element={<SellerSignup />} />
+          <Route path="/signup" element={<CustomerSignup />} />
+          <Route path="/signup/customer" element={<Navigate to="/signup" replace />} />
+          <Route path="/signup/seller" element={<Navigate to="/signup" replace />} />
           
-          {/* Customer Dashboard routes */}
-          <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-          <Route path="/customer/edit-profile" element={<EditCustomerProfile />} />
-          <Route path="/customer/settings" element={<CustomerSettings />} />
-          <Route path="/customer/profile-information" element={<ProfileInformation />} />
-          <Route path="/customer/addresses" element={<AddressesPage />} />
+          {/* User account routes */}
+          <Route path="/user/dashboard" element={<CustomerDashboard />} />
+          <Route path="/user/edit-profile" element={<EditCustomerProfile />} />
+          <Route path="/user/settings" element={<CustomerSettings />} />
+          <Route path="/user/profile-information" element={<ProfileInformation />} />
+          <Route path="/user/addresses" element={<AddressesPage />} />
+          <Route path="/customer/*" element={<Navigate to="/user/dashboard" replace />} />
           
-          {/* Seller Dashboard routes */}
-          <Route path="/seller/dashboard" element={<SellerDashboard />} />
-          <Route path="/seller/products" element={<SellerProductsPage />} />
-          <Route path="/seller/products/add" element={<SellerProductsPage />} />
-          <Route path="/seller/orders" element={<SellerOrdersPage />} />
-          <Route path="/seller/sales" element={<SellerSalesPage />} />
-          <Route path="/seller/analytics" element={<SellerAnalyticsPage />} />
-          <Route path="/seller/settings" element={<SellerSettingsPage />} />
+          {/* Admins can sign in but cannot self-register. */}
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
           
           {/* Shopping routes */}
           <Route path="/products" element={<ProductsPage />} />

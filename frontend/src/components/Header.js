@@ -36,14 +36,14 @@ const Header = () => {
   };
 
   const categories = [
-    'Electronics',
-    'Fashion',
-    'Home & Garden',
-    'Sports',
-    'Books',
-    'Toys',
-    'Beauty',
-    'Automotive'
+    'Computers',
+    'Smartphones',
+    'Audio',
+    'TV & Displays',
+    'Gaming',
+    'Cameras',
+    'Smart Home',
+    'Accessories'
   ];
 
   return (
@@ -56,16 +56,14 @@ const Header = () => {
           </div>
           <div className="top-right">
             {user ? (
-              user.role === 'seller' ? (
-                <Link to="/seller/dashboard">Seller Dashboard</Link>
-              ) : (
-                <Link to="/customer/dashboard">My Account</Link>
-              )
+              <Link to={user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'}>
+                {user.role === 'admin' ? 'Admin Dashboard' : 'My Account'}
+              </Link>
             ) : (
               <>
                 <Link to="/login">Sign In</Link>
                 <span className="divider">|</span>
-                <Link to="/signup/customer">Register</Link>
+                <Link to="/signup">Register</Link>
               </>
             )}
           </div>
@@ -78,7 +76,7 @@ const Header = () => {
           <div className="header-content">
             {/* Logo */}
             <div className="logo" onClick={() => navigate('/')}>
-              <h1>ShopHub</h1>
+              <h1>Tech<span>Mart</span></h1>
             </div>
 
             {/* Search Bar */}
@@ -108,7 +106,7 @@ const Header = () => {
                   </button>
                   {showUserMenu && (
                     <div className="user-dropdown">
-                      <Link to={user.role === 'seller' ? '/seller/dashboard' : '/customer/dashboard'}>
+                      <Link to={user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'}>
                         My Dashboard
                       </Link>
                       <Link to="/orders">My Orders</Link>
@@ -125,12 +123,6 @@ const Header = () => {
                 {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
               </Link>
 
-              {user?.role === 'seller' && (
-                <Link to="/seller/products/add" className="sell-btn">
-                  <i className="icon"></i>
-                  Sell
-                </Link>
-              )}
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -180,7 +172,7 @@ const Header = () => {
                   <i className="icon"></i>
                   <span>Hello, {user.firstName}</span>
                 </div>
-                <Link to={user.role === 'seller' ? '/seller/dashboard' : '/customer/dashboard'} onClick={() => setShowMobileMenu(false)}>
+                <Link to={user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'} onClick={() => setShowMobileMenu(false)}>
                   My Dashboard
                 </Link>
                 <Link to="/orders" onClick={() => setShowMobileMenu(false)}>My Orders</Link>
@@ -190,7 +182,7 @@ const Header = () => {
             ) : (
               <>
                 <Link to="/login" onClick={() => setShowMobileMenu(false)}>Sign In</Link>
-                <Link to="/signup/customer" onClick={() => setShowMobileMenu(false)}>Register</Link>
+                <Link to="/signup" onClick={() => setShowMobileMenu(false)}>Register</Link>
               </>
             )}
             <div className="mobile-categories">

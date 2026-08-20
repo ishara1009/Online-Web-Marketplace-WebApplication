@@ -37,8 +37,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['customer', 'seller', 'admin'],
-      default: 'customer',
+      enum: ['user', 'admin'],
+      default: 'user',
     },
     phone: {
       type: String,
@@ -48,35 +48,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       maxLength: [200, 'Address cannot exceed 200 characters'],
     },
-    // Customer-specific fields
+    // User profile fields
     gender: {
       type: String,
       enum: ['male', 'female', 'other'],
-    },
-    // Seller-specific fields
-    ownerName: {
-      type: String,
-      maxLength: [50, 'Owner name cannot exceed 50 characters'],
-    },
-    shopName: {
-      type: String,
-      maxLength: [100, 'Shop name cannot exceed 100 characters'],
-    },
-    businessAddress: {
-      type: String,
-      maxLength: [200, 'Business address cannot exceed 200 characters'],
-    },
-    nicOrBusinessRegNo: {
-      type: String,
-      maxLength: [50, 'NIC/Business Reg No cannot exceed 50 characters'],
-    },
-    bankAccountOrPaymentMethod: {
-      type: String,
-      maxLength: [100, 'Payment method cannot exceed 100 characters'],
-    },
-    agreedToSellerPolicy: {
-      type: Boolean,
-      default: false,
     },
     isVerified: {
       type: Boolean,

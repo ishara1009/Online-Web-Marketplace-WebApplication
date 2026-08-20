@@ -17,7 +17,7 @@ const ProfileInformation = () => {
 
     const parsedUser = JSON.parse(userData);
     
-    if (parsedUser.role !== 'customer') {
+    if (parsedUser.role !== 'user') {
       navigate('/login');
       return;
     }
@@ -26,11 +26,11 @@ const ProfileInformation = () => {
   }, [navigate]);
 
   const handleEditProfile = () => {
-    navigate('/customer/edit-profile');
+    navigate('/user/edit-profile');
   };
 
   const handleBackToSettings = () => {
-    navigate('/customer/settings');
+    navigate('/user/settings');
   };
 
   if (!user) {
