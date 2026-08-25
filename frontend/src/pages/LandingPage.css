@@ -12,7 +12,7 @@
 
 /* Header Styles */
 .landing-header {
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #2563eb 100%);
   padding: 1rem 0;
   position: sticky;
   top: 0;
@@ -62,7 +62,7 @@
 
 .nav-btn-primary {
   background: white;
-  color: #ff6b35;
+  color: #2563eb;
   border: none;
   padding: 0.6rem 1.5rem;
   font-size: 1rem;
@@ -79,7 +79,7 @@
 
 /* Hero Section */
 .hero-section {
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #2563eb 100%);
   padding: 6rem 0;
   color: white;
   text-align: center;
@@ -114,7 +114,7 @@
 
 .btn-start {
   background: white;
-  color: #ff6b35;
+  color: #2563eb;
   border: none;
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
@@ -144,7 +144,7 @@
 
 .btn-signin:hover {
   background: white;
-  color: #ff6b35;
+  color: #2563eb;
   transform: translateY(-3px);
 }
 
@@ -184,7 +184,7 @@
 .feature-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(255, 107, 53, 0.15);
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 .feature-icon {
@@ -207,7 +207,7 @@
 
 /* CTA Section */
 .cta-section {
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #2563eb 100%);
   padding: 5rem 0;
   color: white;
   text-align: center;
@@ -239,7 +239,7 @@
 
 .btn-cta-primary {
   background: white;
-  color: #ff6b35;
+  color: #2563eb;
   border: none;
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
@@ -268,7 +268,7 @@
 
 .btn-cta-secondary:hover {
   background: white;
-  color: #ff6b35;
+  color: #2563eb;
   transform: translateY(-3px);
 }
 

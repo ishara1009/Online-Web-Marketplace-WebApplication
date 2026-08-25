@@ -63,7 +63,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 .form-group textarea {
@@ -72,7 +72,7 @@
 
 .save-btn {
   padding: 0.75rem 2rem;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   border: none;
   border-radius: 8px;
@@ -83,7 +83,7 @@
 }
 
 .save-btn:hover {
-  background: #e55a2b;
+  background: #1e40af;
   transform: translateY(-2px);
 }
 

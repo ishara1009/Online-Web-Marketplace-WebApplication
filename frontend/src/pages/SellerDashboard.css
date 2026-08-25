@@ -4,7 +4,7 @@
 }
 
 .dashboard-nav {
-  background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
   color: white;
   padding: 15px 30px;
   display: flex;
@@ -30,7 +30,7 @@
 
 .logout-btn:hover {
   background-color: white;
-  color: #ff6600;
+  color: #2563eb;
 }
 
 .loading {
@@ -67,7 +67,7 @@
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto 15px;
-  border: 3px solid #ff6600;
+  border: 3px solid #2563eb;
 }
 
 .profile-avatar img {
@@ -97,8 +97,8 @@
 }
 
 .seller-badge {
-  background-color: #fff5f0;
-  color: #ff6600;
+  background-color: #eff6ff;
+  color: #2563eb;
 }
 
 .sidebar-menu {
@@ -120,13 +120,13 @@
 
 .menu-item:hover {
   background-color: #f5f7fa;
-  color: #ff6600;
+  color: #2563eb;
 }
 
 .menu-item.active {
-  background-color: #fff5f0;
-  color: #ff6600;
-  border-left: 4px solid #ff6600;
+  background-color: #eff6ff;
+  color: #2563eb;
+  border-left: 4px solid #2563eb;
 }
 
 .menu-item span {
@@ -285,7 +285,7 @@
 }
 
 .action-btn.primary {
-  background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
   color: white;
 }
 
@@ -337,7 +337,7 @@
 .activity-icon {
   width: 45px;
   height: 45px;
-  background-color: #fff5f0;
+  background-color: #eff6ff;
   border-radius: 8px;
   display: flex;
   align-items: center;

@@ -4,7 +4,7 @@
 }
 
 .settings-nav {
-  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
   color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -37,7 +37,7 @@
 
 .back-btn:hover {
   background: white;
-  color: #ff6b00;
+  color: #2563eb;
   transform: translateY(-1px);
 }
 
@@ -86,7 +86,7 @@
 .settings-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(255, 107, 0, 0.12);
-  border-color: #ff6b00;
+  border-color: #2563eb;
 }
 
 .settings-card-icon {
@@ -96,7 +96,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #fff4e6 0%, #ffe0b3 100%);
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
   border-radius: 10px;
   flex-shrink: 0;
 }
@@ -121,7 +121,7 @@
 
 .settings-card-arrow {
   font-size: 1.3rem;
-  color: #ff6b00;
+  color: #2563eb;
   font-weight: bold;
   transition: transform 0.3s ease;
 }

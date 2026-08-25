@@ -44,7 +44,7 @@
 
 .shop-now-btn {
   padding: 1rem 2.5rem;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   border: none;
   border-radius: 8px;
@@ -55,7 +55,7 @@
 }
 
 .shop-now-btn:hover {
-  background: #e55a2b;
+  background: #1e40af;
   transform: translateY(-2px);
 }
 
@@ -79,13 +79,13 @@
 }
 
 .filter-btn:hover {
-  border-color: #ff6b35;
-  color: #ff6b35;
+  border-color: #2563eb;
+  color: #2563eb;
 }
 
 .filter-btn.active {
-  background: #ff6b35;
-  border-color: #ff6b35;
+  background: #2563eb;
+  border-color: #2563eb;
   color: white;
 }
 
@@ -197,7 +197,7 @@
 
 .item-price {
   font-weight: 700;
-  color: #ff6b35;
+  color: #2563eb;
   font-size: 1rem !important;
 }
 
@@ -216,7 +216,7 @@
 }
 
 .order-total strong {
-  color: #ff6b35;
+  color: #2563eb;
   font-size: 1.4rem;
 }
 
@@ -237,22 +237,22 @@
 }
 
 .view-details-btn {
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
 }
 
 .view-details-btn:hover {
-  background: #e55a2b;
+  background: #1e40af;
 }
 
 .review-btn {
   background: white;
-  border: 2px solid #ff6b35;
-  color: #ff6b35;
+  border: 2px solid #2563eb;
+  color: #2563eb;
 }
 
 .review-btn:hover {
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
 }
 

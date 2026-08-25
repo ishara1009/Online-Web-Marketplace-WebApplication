@@ -4,7 +4,7 @@ import './SellerSalesPage.css';
 
 const SellerSalesPage = () => {
   const navigate = useNavigate();
-  const [salesData, setSalesData] = useState({
+  const [salesData] = useState({
     totalSales: 2499.97,
     totalOrders: 12,
     avgOrderValue: 208.33,

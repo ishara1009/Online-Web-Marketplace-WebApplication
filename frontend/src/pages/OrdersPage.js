@@ -24,7 +24,7 @@ const OrdersPage = () => {
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
       case 'processing':
-        return '#ffa500';
+        return '#2563eb';
       case 'shipped':
         return '#17a2b8';
       case 'delivered':
@@ -52,7 +52,7 @@ const OrdersPage = () => {
           <div className="loading">Loading orders...</div>
         ) : orders.length === 0 ? (
           <div className="no-orders">
-            <div className="no-orders-icon">NO</div>
+            <div className="no-orders-icon" aria-hidden="true">0</div>
             <h2>No orders yet</h2>
             <p>Start shopping to see your orders here!</p>
             <button 
@@ -123,7 +123,7 @@ const OrdersPage = () => {
                           <div className="item-info">
                             <h4>{item.name}</h4>
                             <p>Quantity: {item.quantity}</p>
-                            <p className="item-price">${item.price}</p>
+                            <p className="item-price">LKR {Number(item.price).toLocaleString('en-LK')}</p>
                           </div>
                         </div>
                       ))}
@@ -131,7 +131,7 @@ const OrdersPage = () => {
 
                     <div className="order-footer">
                       <div className="order-total">
-                        Total: <strong>${order.total.toFixed(2)}</strong>
+                        Total: <strong>LKR {Number(order.total).toLocaleString('en-LK', { minimumFractionDigits: 2 })}</strong>
                       </div>
                       <div className="order-actions">
                         <button 

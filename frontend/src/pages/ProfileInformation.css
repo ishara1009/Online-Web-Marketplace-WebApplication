@@ -4,7 +4,7 @@
 }
 
 .profile-nav {
-  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
   color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -37,7 +37,7 @@
 
 .back-btn:hover {
   background: white;
-  color: #ff6b00;
+  color: #2563eb;
   transform: translateY(-1px);
 }
 
@@ -64,7 +64,7 @@
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #ff6b00;
+  border: 4px solid #2563eb;
   flex-shrink: 0;
 }
 
@@ -93,8 +93,8 @@
 
 .user-role-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #fff4e6 0%, #ffe0b3 100%);
-  color: #ff6b00;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  color: #2563eb;
   padding: 0.4rem 1rem;
   border-radius: 20px;
   font-size: 0.875rem;
@@ -102,7 +102,7 @@
 }
 
 .edit-profile-btn {
-  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
   color: white;
   border: none;
   padding: 0.85rem 2rem;
@@ -171,7 +171,7 @@
 
 .info-card:hover {
   background: #fff;
-  border-color: #ff6b00;
+  border-color: #2563eb;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 107, 0, 0.08);
 }
@@ -194,8 +194,8 @@
 }
 
 .info-card:hover .info-card-icon {
-  border-color: #ff6b00;
-  background: linear-gradient(135deg, #fff4e6 0%, #ffe0b3 100%);
+  border-color: #2563eb;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
 }
 
 .info-card-content {
@@ -228,7 +228,7 @@
 
 .badge-customer {
   display: inline-block;
-  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
   color: white;
   padding: 0.4rem 1.1rem;
   border-radius: 20px;
@@ -267,7 +267,7 @@
 .activity-card-modern:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  border-color: #ff6b00;
+  border-color: #2563eb;
 }
 
 .activity-header {
@@ -284,14 +284,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #fff4e6 0%, #ffe0b3 100%);
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
   border-radius: 12px;
 }
 
 .activity-number {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #ff6b00;
+  color: #2563eb;
   line-height: 1;
 }
 

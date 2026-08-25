@@ -35,6 +35,12 @@ const Header = () => {
     navigate('/');
   };
 
+  const dashboardPath = user?.role === 'admin'
+    ? '/admin/dashboard'
+    : user?.role === 'seller'
+      ? '/seller/dashboard'
+      : '/user/dashboard';
+
   const categories = [
     'Computers',
     'Smartphones',
@@ -52,12 +58,12 @@ const Header = () => {
       <div className="header-top">
         <div className="container">
           <div className="top-left">
-            <span>Customer Support: 1-800-123-4567</span>
+            <span>Customer Support: +94 11 234 5678</span>
           </div>
           <div className="top-right">
             {user ? (
-              <Link to={user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'}>
-                {user.role === 'admin' ? 'Admin Dashboard' : 'My Account'}
+              <Link to={dashboardPath}>
+                {user.role === 'admin' ? 'Admin Dashboard' : user.role === 'seller' ? 'Seller Dashboard' : 'My Account'}
               </Link>
             ) : (
               <>
@@ -88,7 +94,8 @@ const Header = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button type="submit">
-                <i className="search-icon"></i>
+                <span className="search-icon" aria-hidden="true">⌕</span>
+                <span className="sr-only">Search</span>
               </button>
             </form>
 
@@ -100,13 +107,13 @@ const Header = () => {
                     className="user-btn"
                     onClick={() => setShowUserMenu(!showUserMenu)}
                   >
-                    <i className="icon"></i>
-                    <span>{user.firstName}</span>
-                    <i className="arrow"></i>
+                    <span className="user-avatar" aria-hidden="true">{(user.name || user.firstName || 'U').charAt(0).toUpperCase()}</span>
+                    <span>{user.name || user.firstName || 'Account'}</span>
+                    <span className="arrow" aria-hidden="true">⌄</span>
                   </button>
                   {showUserMenu && (
                     <div className="user-dropdown">
-                      <Link to={user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'}>
+                      <Link to={dashboardPath}>
                         My Dashboard
                       </Link>
                       <Link to="/orders">My Orders</Link>
@@ -118,7 +125,7 @@ const Header = () => {
               )}
 
               <Link to="/cart" className="cart-btn">
-                <i className="icon"></i>
+                <span className="cart-icon" aria-hidden="true">▣</span>
                 <span>Cart</span>
                 {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
               </Link>
@@ -129,8 +136,10 @@ const Header = () => {
             <button 
               className="mobile-menu-toggle"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
+              aria-label="Open navigation menu"
+              aria-expanded={showMobileMenu}
             >
-              Menu
+              <span aria-hidden="true">☰</span>
             </button>
           </div>
         </div>
@@ -163,16 +172,17 @@ const Header = () => {
             <button 
               className="close-btn"
               onClick={() => setShowMobileMenu(false)}
+              aria-label="Close navigation menu"
             >
-              X
+              ×
             </button>
             {user ? (
               <>
                 <div className="mobile-user-info">
-                  <i className="icon"></i>
-                  <span>Hello, {user.firstName}</span>
+                  <span className="user-avatar" aria-hidden="true">{(user.name || user.firstName || 'U').charAt(0).toUpperCase()}</span>
+                  <span>Hello, {user.name || user.firstName || 'there'}</span>
                 </div>
-                <Link to={user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'} onClick={() => setShowMobileMenu(false)}>
+                <Link to={dashboardPath} onClick={() => setShowMobileMenu(false)}>
                   My Dashboard
                 </Link>
                 <Link to="/orders" onClick={() => setShowMobileMenu(false)}>My Orders</Link>

@@ -22,8 +22,14 @@ class APIFeatures {
     const queryCopy = { ...this.queryStr };
 
     // Removing fields from the query
-    const removeFields = ['keyword', 'limit', 'page'];
+    const removeFields = ['keyword', 'limit', 'page', 'sort'];
     removeFields.forEach((el) => delete queryCopy[el]);
+    // Empty controls mean "all" on the frontend and must not become Mongo filters.
+    Object.keys(queryCopy).forEach((key) => {
+      if (queryCopy[key] === '' || queryCopy[key] === null || queryCopy[key] === undefined) {
+        delete queryCopy[key];
+      }
+    });
 
     // Advance filter for price, ratings etc
     let queryStr = JSON.stringify(queryCopy);

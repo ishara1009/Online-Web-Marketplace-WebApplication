@@ -5,16 +5,23 @@ import Login from './components/Login';
 import CustomerSignup from './components/CustomerSignup';
 import CustomerDashboard from './pages/CustomerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminProductsPage from './pages/AdminProductsPage';
 import EditCustomerProfile from './pages/EditCustomerProfile';
 import CustomerSettings from './pages/CustomerSettings';
 import ProfileInformation from './pages/ProfileInformation';
-import ProductsPage from './pages/ProductsPage';
-import ProductDetailsPage from './pages/ProductDetailsPage';
+import ProductsPage from './pages/CustomerProductsPage';
+import ProductDetailsPage from './pages/CustomerProductDetailsPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import OrdersPage from './pages/OrdersPage';
 import AddressesPage from './pages/AddressesPage';
+import SellerDashboard from './pages/SellerDashboard';
+import SellerProductsPage from './pages/SellerProductsPage';
+import SellerOrdersPage from './pages/SellerOrdersPage';
+import SellerSalesPage from './pages/SellerSalesPage';
+import SellerAnalyticsPage from './pages/SellerAnalyticsPage';
+import SellerSettingsPage from './pages/SellerSettingsPage';
 import './App.css';
 
 function App() {
@@ -41,6 +48,15 @@ function App() {
           
           {/* Admins can sign in but cannot self-register. */}
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/products" element={<AdminProductsPage />} />
+
+          {/* Seller account routes */}
+          <Route path="/seller/dashboard" element={<SellerDashboard />} />
+          <Route path="/seller/products" element={<SellerProductsPage />} />
+          <Route path="/seller/orders" element={<SellerOrdersPage />} />
+          <Route path="/seller/sales" element={<SellerSalesPage />} />
+          <Route path="/seller/analytics" element={<SellerAnalyticsPage />} />
+          <Route path="/seller/settings" element={<SellerSettingsPage />} />
           
           {/* Shopping routes */}
           <Route path="/products" element={<ProductsPage />} />

@@ -6,7 +6,6 @@ import './CheckoutPage.css';
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
-  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -32,7 +31,6 @@ const CheckoutPage = () => {
     }
 
     const parsedUser = JSON.parse(userData);
-    setUser(parsedUser);
 
     // Pre-fill form with user data
     setFormData(prev => ({

@@ -84,7 +84,7 @@
 }
 
 .value.total {
-  color: #ff6b35;
+  color: #2563eb;
   font-size: 1.3rem;
 }
 
@@ -146,7 +146,7 @@
 .item-price {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .shipping-info {
@@ -187,23 +187,23 @@
 }
 
 .track-order-btn {
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
 }
 
 .track-order-btn:hover {
-  background: #e55a2b;
+  background: #1e40af;
   transform: translateY(-2px);
 }
 
 .continue-shopping-btn {
   background: white;
-  border: 2px solid #ff6b35;
-  color: #ff6b35;
+  border: 2px solid #2563eb;
+  color: #2563eb;
 }
 
 .continue-shopping-btn:hover {
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
 }
 

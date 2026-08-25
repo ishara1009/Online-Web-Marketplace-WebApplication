@@ -26,7 +26,7 @@
 }
 
 .breadcrumb span:not(.current):hover {
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .breadcrumb span.current {
@@ -74,7 +74,7 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -99,11 +99,11 @@
 }
 
 .thumbnail:hover {
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 .thumbnail.active {
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 .thumbnail img {
@@ -141,7 +141,7 @@
 }
 
 .rating {
-  color: #ffa500;
+  color: #2563eb;
   font-weight: 700;
   font-size: 1.1rem;
 }
@@ -164,7 +164,7 @@
 }
 
 .seller-rating {
-  color: #ffa500;
+  color: #2563eb;
   font-size: 0.9rem;
 }
 
@@ -180,7 +180,7 @@
 .current-price {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .original-price {
@@ -276,23 +276,23 @@
 
 .add-to-cart-btn {
   background: white;
-  border: 2px solid #ff6b35;
-  color: #ff6b35;
+  border: 2px solid #2563eb;
+  color: #2563eb;
 }
 
 .add-to-cart-btn:hover {
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   transform: translateY(-2px);
 }
 
 .buy-now-btn {
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
 }
 
 .buy-now-btn:hover {
-  background: #e55a2b;
+  background: #1e40af;
   transform: translateY(-2px);
 }
 
@@ -351,12 +351,12 @@
 }
 
 .tab:hover {
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .tab.active {
-  color: #ff6b35;
-  border-bottom-color: #ff6b35;
+  color: #2563eb;
+  border-bottom-color: #2563eb;
 }
 
 .tabs-content {
@@ -414,7 +414,7 @@
 .overall-rating h2 {
   font-size: 3rem;
   margin: 0;
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .overall-rating .stars {
@@ -458,7 +458,7 @@
 }
 
 .review-rating {
-  color: #ffa500;
+  color: #2563eb;
   font-size: 0.9rem;
 }
 
@@ -490,8 +490,8 @@
 }
 
 .helpful-btn:hover {
-  border-color: #ff6b35;
-  color: #ff6b35;
+  border-color: #2563eb;
+  color: #2563eb;
 }
 
 /* Loading & Error States */

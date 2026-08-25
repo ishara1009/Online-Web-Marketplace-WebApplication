@@ -25,7 +25,7 @@
 
 .add-product-btn {
   padding: 0.75rem 1.5rem;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   border: none;
   border-radius: 8px;
@@ -36,7 +36,7 @@
 }
 
 .add-product-btn:hover {
-  background: #e55a2b;
+  background: #1e40af;
   transform: translateY(-2px);
 }
 
@@ -95,7 +95,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 .form-group textarea {
@@ -104,7 +104,7 @@
 
 .submit-btn {
   padding: 1rem 2rem;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   border: none;
   border-radius: 8px;
@@ -115,7 +115,7 @@
 }
 
 .submit-btn:hover {
-  background: #e55a2b;
+  background: #1e40af;
   transform: translateY(-2px);
 }
 
@@ -183,7 +183,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
@@ -221,7 +221,7 @@
 .current-price {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .original-price {

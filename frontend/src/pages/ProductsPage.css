@@ -153,8 +153,8 @@
 }
 
 .filter-toggle-btn:hover {
-  border-color: #ff6b35;
-  color: #ff6b35;
+  border-color: #2563eb;
+  color: #2563eb;
 }
 
 .sort-select {
@@ -169,7 +169,7 @@
 
 .sort-select:focus {
   outline: none;
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 /* Products Grid */
@@ -198,7 +198,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   padding: 0.3rem 0.6rem;
   border-radius: 4px;
@@ -245,7 +245,7 @@
 }
 
 .product-name:hover {
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .product-rating {
@@ -256,7 +256,7 @@
 }
 
 .rating {
-  color: #ffa500;
+  color: #2563eb;
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -282,7 +282,7 @@
 .current-price {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .original-price {
@@ -309,23 +309,23 @@
 }
 
 .add-to-cart-btn {
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
 }
 
 .add-to-cart-btn:hover {
-  background: #e55a2b;
+  background: #1e40af;
   transform: translateY(-2px);
 }
 
 .view-details-btn {
   background: transparent;
-  border: 2px solid #ff6b35;
-  color: #ff6b35;
+  border: 2px solid #2563eb;
+  color: #2563eb;
 }
 
 .view-details-btn:hover {
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
 }
 

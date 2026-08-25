@@ -23,8 +23,8 @@
 }
 
 .back-btn:hover {
-  border-color: #ff6b35;
-  color: #ff6b35;
+  border-color: #2563eb;
+  color: #2563eb;
 }
 
 .page-header h1 {
@@ -56,13 +56,13 @@
 }
 
 .filter-btn:hover {
-  border-color: #ff6b35;
-  color: #ff6b35;
+  border-color: #2563eb;
+  color: #2563eb;
 }
 
 .filter-btn.active {
-  background: #ff6b35;
-  border-color: #ff6b35;
+  background: #2563eb;
+  border-color: #2563eb;
   color: white;
 }
 
@@ -126,7 +126,7 @@
 
 .order-id {
   font-weight: 700;
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .customer-info {
@@ -177,7 +177,7 @@
 
 .status-select:focus {
   outline: none;
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 .view-btn {

@@ -14,6 +14,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     // Check if there's a success message from signup
@@ -45,15 +46,20 @@ const Login = () => {
       });
 
       if (response.data.success) {
-        // Store token in localStorage
+        // Dashboard guards currently use localStorage as the shared auth source.
+        // Keep the authenticated session there so navigation is not rejected.
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
 
         // Redirect based on user role
-        if (response.data.user.role === 'user') {
+        if (response.data.user.role === 'user' || response.data.user.role === 'customer') {
           navigate('/user/dashboard');
         } else if (response.data.user.role === 'admin') {
           navigate('/admin/dashboard');
+        } else if (response.data.user.role === 'seller') {
+          navigate('/seller/dashboard');
+        } else {
+          navigate('/');
         }
       }
     } catch (err) {
@@ -63,14 +69,24 @@ const Login = () => {
     }
   };
 
-  const containerStyle = {
-    background: `url(${process.env.PUBLIC_URL}/images/login-background.jpg) no-repeat center center fixed`,
-    backgroundSize: 'cover'
-  };
-
   return (
-    <div className="login-container" style={containerStyle}>
-      <Link to="/" className="login-brand"><span>T</span>Tech<strong>Mart</strong></Link>
+    <main className="login-container">
+      <section className="login-showcase" aria-label="TechMart shopping benefits">
+        <Link to="/" className="login-brand"><span>T</span>Tech<strong>Mart</strong></Link>
+        <div className="login-showcase-copy">
+          <span className="login-kicker">Sri Lanka's trusted tech marketplace</span>
+          <h2>Everything tech.<br/><strong>One secure account.</strong></h2>
+          <p>Track orders, save favourites and unlock member-only offers from verified electronics sellers islandwide.</p>
+          <div className="login-benefits">
+            <span><b>Islandwide delivery</b>Fast, tracked shipping</span>
+            <span><b>Secure payments</b>Protected checkout</span>
+            <span><b>Genuine products</b>Verified sellers</span>
+          </div>
+        </div>
+        <small>Secure checkout · Easy returns · Local support</small>
+      </section>
+      <section className="login-panel">
+      <Link to="/" className="login-brand login-mobile-brand"><span>T</span>Tech<strong>Mart</strong></Link>
       <div className="login-card">
         <div className="login-header">
           <span className="login-kicker">Welcome back</span>
@@ -78,8 +94,8 @@ const Login = () => {
           <p>Access your orders, saved items, and exclusive deals.</p>
         </div>
 
-        {successMessage && <div className="success-message">{successMessage}</div>}
-        {error && <div className="error-message">{error}</div>}
+        {successMessage && <div className="success-message" role="status">{successMessage}</div>}
+        {error && <div className="error-message" role="alert">{error}</div>}
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
@@ -91,21 +107,26 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
+              autoComplete="email"
               required
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Password</label>
+            <div className="password-input">
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter your password"
+              autoComplete="current-password"
               required
             />
+            <button type="button" onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? 'Hide' : 'Show'}</button>
+            </div>
           </div>
 
           <div className="form-options">
@@ -131,15 +152,17 @@ const Login = () => {
         </form>
 
         <div className="signup-links">
-          <p>Don't have an account?</p>
+          <p>New to TechMart?</p>
           <div className="signup-buttons">
             <Link to="/signup" className="signup-link customer-link">
-              Create a user account
+              Create your free account
             </Link>
           </div>
         </div>
       </div>
-    </div>
+      <p className="login-support">Need help? <a href="mailto:support@techmart.lk">support@techmart.lk</a> · +94 11 234 5678</p>
+      </section>
+    </main>
   );
 };
 

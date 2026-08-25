@@ -16,8 +16,12 @@ const productSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: [true, 'Please enter product price'],
-      maxLength: [8, 'Price cannot exceed 8 digits'],
-      default: 0.0,
+      min: [0, 'Price cannot be negative'],
+    },
+    discountPrice: {
+      type: Number,
+      min: [0, 'Discount price cannot be negative'],
+      default: null,
     },
     discount: {
       type: Number,
@@ -56,8 +60,22 @@ const productSchema = new mongoose.Schema(
     stock: {
       type: Number,
       required: [true, 'Please enter product stock'],
-      maxLength: [5, 'Stock cannot exceed 5 digits'],
+      min: [0, 'Stock cannot be negative'],
       default: 0,
+    },
+    sku: {
+      type: String,
+      required: [true, 'Please enter a product SKU'],
+      unique: true,
+      uppercase: true,
+      trim: true,
+      maxLength: [80, 'SKU cannot exceed 80 characters'],
+    },
+    status: {
+      type: String,
+      enum: ['active', 'inactive', 'out_of_stock'],
+      default: 'active',
+      index: true,
     },
     ratings: {
       type: Number,

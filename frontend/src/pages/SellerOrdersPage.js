@@ -58,7 +58,7 @@ const SellerOrdersPage = () => {
 
   const getStatusColor = (status) => {
     const colors = {
-      pending: '#ffa500',
+      pending: '#2563eb',
       processing: '#17a2b8',
       shipped: '#28a745',
       delivered: '#28a745',

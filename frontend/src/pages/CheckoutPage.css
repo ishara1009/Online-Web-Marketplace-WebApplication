@@ -80,7 +80,7 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 /* Payment Methods */
@@ -103,11 +103,11 @@
 }
 
 .payment-method:hover {
-  border-color: #ff6b35;
+  border-color: #2563eb;
 }
 
 .payment-method.active {
-  border-color: #ff6b35;
+  border-color: #2563eb;
   background: #fff5f2;
 }
 
@@ -192,7 +192,7 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   width: 22px;
   height: 22px;
@@ -269,13 +269,13 @@
 }
 
 .summary-row.total span:last-child {
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .place-order-btn {
   width: 100%;
   padding: 1.25rem;
-  background: #ff6b35;
+  background: #2563eb;
   color: white;
   border: none;
   border-radius: 8px;
@@ -286,7 +286,7 @@
 }
 
 .place-order-btn:hover:not(:disabled) {
-  background: #e55a2b;
+  background: #1e40af;
   transform: translateY(-2px);
 }
 

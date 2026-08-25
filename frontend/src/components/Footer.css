@@ -35,7 +35,7 @@
   font-size: 1.1rem;
   margin: 0 0 1rem 0;
   font-weight: 600;
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .footer-section p {
@@ -62,7 +62,7 @@
 }
 
 .footer-section ul li a:hover {
-  color: #ff6b35;
+  color: #2563eb;
 }
 
 .social-links {
@@ -85,7 +85,7 @@
 }
 
 .social-links a:hover {
-  background: #ff6b35;
+  background: #2563eb;
   transform: translateY(-3px);
 }
 
