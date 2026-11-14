@@ -22,9 +22,15 @@ import SellerOrdersPage from './pages/SellerOrdersPage';
 import SellerSalesPage from './pages/SellerSalesPage';
 import SellerAnalyticsPage from './pages/SellerAnalyticsPage';
 import SellerSettingsPage from './pages/SellerSettingsPage';
+import ProtectedRoute from './components/ProtectedRoute';
+import NotFoundPage from './pages/NotFoundPage';
+import InformationPage from './pages/InformationPage';
+import WishlistPage from './pages/WishlistPage';
+import OrderDetailsPage from './pages/OrderDetailsPage';
 import './App.css';
 
 function App() {
+  const protectedPage = (page, roles) => <ProtectedRoute roles={roles}>{page}</ProtectedRoute>;
   return (
     <Router>
       <div className="App">
@@ -39,36 +45,50 @@ function App() {
           <Route path="/signup/seller" element={<Navigate to="/signup" replace />} />
           
           {/* User account routes */}
-          <Route path="/user/dashboard" element={<CustomerDashboard />} />
-          <Route path="/user/edit-profile" element={<EditCustomerProfile />} />
-          <Route path="/user/settings" element={<CustomerSettings />} />
-          <Route path="/user/profile-information" element={<ProfileInformation />} />
-          <Route path="/user/addresses" element={<AddressesPage />} />
+          <Route path="/user/dashboard" element={protectedPage(<CustomerDashboard />, ['user'])} />
+          <Route path="/user/edit-profile" element={protectedPage(<EditCustomerProfile />, ['user'])} />
+          <Route path="/user/settings" element={protectedPage(<CustomerSettings />, ['user'])} />
+          <Route path="/user/profile-information" element={protectedPage(<ProfileInformation />, ['user'])} />
+          <Route path="/user/addresses" element={protectedPage(<AddressesPage />, ['user'])} />
           <Route path="/customer/*" element={<Navigate to="/user/dashboard" replace />} />
           
           {/* Admins can sign in but cannot self-register. */}
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/products" element={<AdminProductsPage />} />
+          <Route path="/admin/dashboard" element={protectedPage(<AdminDashboard />, ['admin'])} />
+          <Route path="/admin/products" element={protectedPage(<AdminProductsPage />, ['admin'])} />
 
           {/* Seller account routes */}
-          <Route path="/seller/dashboard" element={<SellerDashboard />} />
-          <Route path="/seller/products" element={<SellerProductsPage />} />
-          <Route path="/seller/orders" element={<SellerOrdersPage />} />
-          <Route path="/seller/sales" element={<SellerSalesPage />} />
-          <Route path="/seller/analytics" element={<SellerAnalyticsPage />} />
-          <Route path="/seller/settings" element={<SellerSettingsPage />} />
+          <Route path="/seller/dashboard" element={protectedPage(<SellerDashboard />, ['seller'])} />
+          <Route path="/seller/products" element={protectedPage(<SellerProductsPage />, ['seller'])} />
+          <Route path="/seller/orders" element={protectedPage(<SellerOrdersPage />, ['seller'])} />
+          <Route path="/seller/sales" element={protectedPage(<SellerSalesPage />, ['seller'])} />
+          <Route path="/seller/analytics" element={protectedPage(<SellerAnalyticsPage />, ['seller'])} />
+          <Route path="/seller/settings" element={protectedPage(<SellerSettingsPage />, ['seller'])} />
           
           {/* Shopping routes */}
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/product/:id" element={<ProductDetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout" element={protectedPage(<CheckoutPage />, ['user'])} />
           <Route path="/order-success" element={<OrderSuccessPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/wishlist" element={<OrdersPage />} />
+          <Route path="/orders" element={protectedPage(<OrdersPage />, ['user'])} />
+          <Route path="/orders/:id" element={protectedPage(<OrderDetailsPage />, ['user'])} />
+          <Route path="/wishlist" element={protectedPage(<WishlistPage />, ['user'])} />
+
+          <Route path="/info/:slug" element={<InformationPage />} />
+          <Route path="/about" element={<Navigate to="/info/about" replace />} />
+          <Route path="/contact" element={<Navigate to="/info/contact" replace />} />
+          <Route path="/faq" element={<Navigate to="/info/faq" replace />} />
+          <Route path="/support" element={<Navigate to="/info/support" replace />} />
+          <Route path="/shipping" element={<Navigate to="/info/shipping" replace />} />
+          <Route path="/returns" element={<Navigate to="/info/returns" replace />} />
+          <Route path="/terms" element={<Navigate to="/info/terms" replace />} />
+          <Route path="/privacy" element={<Navigate to="/info/privacy" replace />} />
+          <Route path="/cookies" element={<Navigate to="/info/cookies" replace />} />
+          <Route path="/intellectual-property" element={<Navigate to="/info/intellectual-property" replace />} />
+          <Route path="/seller-policy" element={<Navigate to="/info/seller-policy" replace />} />
           
           {/* Catch all route */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </Router>

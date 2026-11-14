@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminDashboard.css';
 import './AdminForms.css';
+import apiClient from '../services/apiClient';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const AdminDashboard = () => {
       .catch(() => setError('Could not load users. Please ensure the backend is running.'));
   }, [navigate]);
 
-  const logout = () => { localStorage.removeItem('token'); localStorage.removeItem('user'); navigate('/login'); };
+  const logout = async () => { try { await apiClient.get('/auth/logout'); } catch (_) {} localStorage.removeItem('token'); localStorage.removeItem('user'); navigate('/login'); };
   const showMessage = (message) => { setNotice(message); setError(''); setTimeout(() => setNotice(''), 4000); };
 
   const createAdmin = async (event) => {

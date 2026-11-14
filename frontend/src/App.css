@@ -1,6 +1,7 @@
 .App {
   min-height: 100vh;
 }
+.checkout-error{margin:0 0 20px;padding:14px 16px;border:1px solid #fecaca;border-radius:10px;background:#fef2f2;color:#b91c1c;font-size:14px}
 
 /* Shared interaction primitives used by legacy and new pages. */
 .App main { animation: tm-fade-up .32s ease both; }

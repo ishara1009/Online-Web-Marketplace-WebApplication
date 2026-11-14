@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import apiClient, { getApiError } from '../services/apiClient';
 import './CheckoutPage.css';
 
 const CheckoutPage = () => {
@@ -15,13 +16,14 @@ const CheckoutPage = () => {
     state: '',
     zipCode: '',
     country: '',
-    paymentMethod: 'card',
+    paymentMethod: 'cod',
     cardNumber: '',
     cardName: '',
     expiryDate: '',
     cvv: ''
   });
   const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -35,7 +37,7 @@ const CheckoutPage = () => {
     // Pre-fill form with user data
     setFormData(prev => ({
       ...prev,
-      fullName: `${parsedUser.firstName} ${parsedUser.lastName}`,
+      fullName: parsedUser.name || `${parsedUser.firstName || ''} ${parsedUser.lastName || ''}`.trim(),
       email: parsedUser.email,
       phone: parsedUser.phone || ''
     }));
@@ -55,7 +57,7 @@ const CheckoutPage = () => {
   };
 
   const calculateSubtotal = () => {
-    return cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return cartItems.reduce((sum, item) => sum + ((item.discountPrice ?? item.price) * item.quantity), 0);
   };
 
   const calculateShipping = () => {
@@ -73,44 +75,19 @@ const CheckoutPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     setProcessing(true);
-
-    // Simulate order processing
-    setTimeout(() => {
-      // Create order object
-      const order = {
-        id: Date.now().toString(),
-        items: cartItems,
-        subtotal: calculateSubtotal(),
-        shipping: calculateShipping(),
-        tax: calculateTax(),
-        total: calculateTotal(),
-        shippingAddress: {
-          fullName: formData.fullName,
-          phone: formData.phone,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          zipCode: formData.zipCode,
-          country: formData.country
-        },
-        paymentMethod: formData.paymentMethod,
-        status: 'Processing',
-        date: new Date().toISOString()
-      };
-
-      // Save order to localStorage
-      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-      orders.unshift(order);
-      localStorage.setItem('orders', JSON.stringify(orders));
-
-      // Clear cart
+    try {
+      const { data } = await apiClient.post('/orders/order/new', {
+        orderItems: cartItems.map(item => ({ product: item._id, quantity: item.quantity })),
+        shippingInfo: { address: formData.address, city: formData.city, state: formData.state, country: formData.country, zipCode: formData.zipCode, phone: formData.phone },
+        paymentInfo: { method: 'Cash on Delivery' },
+      });
       localStorage.setItem('cart', JSON.stringify([]));
-
-      // Redirect to success page
-      setProcessing(false);
-      navigate('/order-success', { state: { order } });
-    }, 2000);
+      navigate('/order-success', { state: { order: data.order } });
+    } catch (requestError) {
+      setError(getApiError(requestError, 'Could not place your order.'));
+    } finally { setProcessing(false); }
   };
 
   const subtotal = calculateSubtotal();
@@ -124,6 +101,7 @@ const CheckoutPage = () => {
 
       <div className="checkout-container">
         <h1 className="checkout-title">Checkout</h1>
+        {error && <div className="checkout-error" role="alert">{error}</div>}
 
         <form className="checkout-form" onSubmit={handleSubmit}>
           <div className="checkout-content">
@@ -236,8 +214,9 @@ const CheckoutPage = () => {
                       value="card"
                       checked={formData.paymentMethod === 'card'}
                       onChange={handleChange}
+                      disabled
                     />
-                    <span>Credit/Debit Card</span>
+                    <span>Credit/Debit Card — unavailable until a payment provider is configured</span>
                   </label>
 
                   <label className={`payment-method ${formData.paymentMethod === 'paypal' ? 'active' : ''}`}>
@@ -247,8 +226,9 @@ const CheckoutPage = () => {
                       value="paypal"
                       checked={formData.paymentMethod === 'paypal'}
                       onChange={handleChange}
+                      disabled
                     />
-                    <span>PayPal</span>
+                    <span>PayPal — unavailable until a payment provider is configured</span>
                   </label>
 
                   <label className={`payment-method ${formData.paymentMethod === 'cod' ? 'active' : ''}`}>
@@ -263,7 +243,7 @@ const CheckoutPage = () => {
                   </label>
                 </div>
 
-                {formData.paymentMethod === 'card' && (
+                {false && formData.paymentMethod === 'card' && (
                   <div className="form-grid">
                     <div className="form-group full-width">
                       <label>Card Number *</label>
@@ -326,7 +306,7 @@ const CheckoutPage = () => {
                   {cartItems.map(item => (
                     <div key={item._id} className="summary-item">
                       <div className="summary-item-image">
-                        <img src={item.images?.[0] || item.image} alt={item.name} />
+                        <img src={item.images?.[0]?.url || item.image} alt={item.name} />
                         <span className="item-qty">{item.quantity}</span>
                       </div>
                       <div className="summary-item-details">
@@ -334,7 +314,7 @@ const CheckoutPage = () => {
                         <p>${item.price} × {item.quantity}</p>
                       </div>
                       <div className="summary-item-total">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        ${((item.discountPrice ?? item.price) * item.quantity).toFixed(2)}
                       </div>
                     </div>
                   ))}

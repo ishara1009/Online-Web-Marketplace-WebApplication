@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import apiClient, { getApiError } from '../services/apiClient';
 import './OrdersPage.css';
 
 const OrdersPage = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [filter, setFilter] = useState('all'); // all, processing, shipped, delivered
 
   useEffect(() => {
@@ -16,9 +18,11 @@ const OrdersPage = () => {
       return;
     }
 
-    const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-    setOrders(storedOrders);
-    setLoading(false);
+    let active = true;
+    apiClient.get('/orders/orders/me').then(({data}) => active && setOrders(data.orders || []))
+      .catch(requestError => active && setError(getApiError(requestError, 'Could not load your orders.')))
+      .finally(() => active && setLoading(false));
+    return () => { active = false; };
   }, [navigate]);
 
   const getStatusColor = (status) => {
@@ -38,7 +42,7 @@ const OrdersPage = () => {
 
   const filteredOrders = orders.filter(order => {
     if (filter === 'all') return true;
-    return order.status.toLowerCase() === filter;
+    return order.orderStatus.toLowerCase() === filter;
   });
 
   return (
@@ -47,6 +51,7 @@ const OrdersPage = () => {
 
       <div className="orders-container">
         <h1 className="orders-title">My Orders</h1>
+        {error && <div className="admin-alert" role="alert">{error}</div>}
 
         {loading ? (
           <div className="loading">Loading orders...</div>
@@ -98,27 +103,27 @@ const OrdersPage = () => {
                 </div>
               ) : (
                 filteredOrders.map(order => (
-                  <div key={order.id} className="order-card">
+                  <div key={order._id} className="order-card">
                     <div className="order-header">
                       <div className="order-id">
-                        <strong>Order #{order.id}</strong>
+                        <strong>Order #{order._id.slice(-8).toUpperCase()}</strong>
                         <span className="order-date">
-                          {new Date(order.date).toLocaleDateString()}
+                          {new Date(order.createdAt).toLocaleDateString()}
                         </span>
                       </div>
                       <div 
                         className="order-status"
-                        style={{ backgroundColor: getStatusColor(order.status) }}
+                        style={{ backgroundColor: getStatusColor(order.orderStatus) }}
                       >
-                        {order.status}
+                        {order.orderStatus}
                       </div>
                     </div>
 
                     <div className="order-items">
-                      {order.items.map(item => (
-                        <div key={item._id} className="order-item">
+                      {order.orderItems.map(item => (
+                        <div key={item._id || item.product} className="order-item">
                           <div className="item-image">
-                            <img src={item.images?.[0] || item.image} alt={item.name} />
+                            <img src={item.image} alt={item.name} />
                           </div>
                           <div className="item-info">
                             <h4>{item.name}</h4>
@@ -131,18 +136,18 @@ const OrdersPage = () => {
 
                     <div className="order-footer">
                       <div className="order-total">
-                        Total: <strong>LKR {Number(order.total).toLocaleString('en-LK', { minimumFractionDigits: 2 })}</strong>
+                        Total: <strong>LKR {Number(order.totalPrice).toLocaleString('en-LK', { minimumFractionDigits: 2 })}</strong>
                       </div>
                       <div className="order-actions">
                         <button 
                           className="view-details-btn"
-                          onClick={() => navigate(`/order/${order.id}`)}
+                          onClick={() => navigate(`/orders/${order._id}`)}
                         >
                           View Details
                         </button>
-                        {order.status.toLowerCase() === 'delivered' && (
-                          <button className="review-btn">
-                            Write Review
+                        {order.orderStatus.toLowerCase() === 'delivered' && order.orderItems[0] && (
+                          <button className="review-btn" onClick={() => navigate(`/product/${order.orderItems[0].product}`)}>
+                            Review Product
                           </button>
                         )}
                       </div>

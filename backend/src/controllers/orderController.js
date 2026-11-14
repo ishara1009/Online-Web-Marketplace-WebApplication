@@ -5,32 +5,46 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 
 // Create new order
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
-  const {
-    orderItems,
-    shippingInfo,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-    paymentInfo,
-  } = req.body;
+  const { orderItems = [], shippingInfo, paymentInfo = {} } = req.body;
+  if (!orderItems.length) return next(new ErrorHandler('Your cart is empty', 400));
+  if (!shippingInfo?.address || !shippingInfo?.city || !shippingInfo?.state || !shippingInfo?.country || !shippingInfo?.zipCode || !shippingInfo?.phone) {
+    return next(new ErrorHandler('Complete shipping information is required', 400));
+  }
+  if (paymentInfo.method !== 'Cash on Delivery') {
+    return next(new ErrorHandler('Online payment is not configured. Please select Cash on Delivery.', 400));
+  }
 
-  const order = await Order.create({
-    orderItems,
-    shippingInfo,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-    paymentInfo,
-    user: req.user._id,
-    paidAt: Date.now(),
-  });
+  const requested = new Map();
+  for (const item of orderItems) {
+    const quantity = Number(item.quantity);
+    if (!item.product || !Number.isInteger(quantity) || quantity < 1) return next(new ErrorHandler('Invalid cart item quantity', 400));
+    requested.set(String(item.product), (requested.get(String(item.product)) || 0) + quantity);
+  }
+  const products = await Product.find({ _id: { $in: [...requested.keys()] }, status: { $ne: 'inactive' }, isActive: { $ne: false } });
+  if (products.length !== requested.size) return next(new ErrorHandler('One or more products are no longer available', 400));
 
-  res.status(201).json({
-    success: true,
-    order,
+  const normalizedItems = products.map(product => {
+    const quantity = requested.get(String(product._id));
+    if (product.stock < quantity || product.status === 'out_of_stock') throw new ErrorHandler(`${product.name} does not have enough stock`, 409);
+    return { product: product._id, name: product.name, quantity, price: product.discountPrice ?? product.price, image: product.images?.[0]?.url || '/images/product-placeholder.png' };
   });
+  const reserved = [];
+  try {
+    for (const item of normalizedItems) {
+      const result = await Product.updateOne({ _id: item.product, stock: { $gte: item.quantity } }, { $inc: { stock: -item.quantity } });
+      if (!result.modifiedCount) throw new ErrorHandler(`${item.name} does not have enough stock`, 409);
+      reserved.push(item);
+    }
+    const itemsPrice = normalizedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const shippingPrice = itemsPrice > 50 ? 0 : 5.99;
+    const taxPrice = Number((itemsPrice * 0.08).toFixed(2));
+    const totalPrice = Number((itemsPrice + shippingPrice + taxPrice).toFixed(2));
+    const order = await Order.create({ orderItems: normalizedItems, shippingInfo, itemsPrice, taxPrice, shippingPrice, totalPrice, paymentInfo: { method: 'Cash on Delivery', status: 'Pending' }, user: req.user._id });
+    return res.status(201).json({ success: true, order });
+  } catch (error) {
+    await Promise.all(reserved.map(item => Product.updateOne({ _id: item.product }, { $inc: { stock: item.quantity } })));
+    throw error;
+  }
 });
 
 // Get single order
@@ -39,6 +53,9 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
 
   if (!order) {
     return next(new ErrorHandler('Order not found with this ID', 404));
+  }
+  if (req.user.role !== 'admin' && String(order.user._id) !== String(req.user.id)) {
+    return next(new ErrorHandler('You are not allowed to access this order', 403));
   }
 
   res.status(200).json({
@@ -86,12 +103,6 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('You have already delivered this order', 400));
   }
 
-  if (req.body.status === 'Shipped') {
-    order.orderItems.forEach(async (item) => {
-      await updateStock(item.product, item.quantity);
-    });
-  }
-
   order.orderStatus = req.body.status;
 
   if (req.body.status === 'Delivered') {
@@ -104,15 +115,6 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
-
-async function updateStock(id, quantity) {
-  const product = await Product.findById(id);
-
-  if (product) {
-    product.stock = product.stock - quantity;
-    await product.save({ validateBeforeSave: false });
-  }
-}
 
 // Delete order - Admin
 exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {

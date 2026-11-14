@@ -46,7 +46,7 @@ const CartPage = () => {
   };
 
   const calculateSubtotal = () => {
-    return cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return cartItems.reduce((sum, item) => sum + ((item.discountPrice ?? item.price) * item.quantity), 0);
   };
 
   const calculateTotal = () => {
@@ -115,7 +115,7 @@ const CartPage = () => {
                       className="item-image"
                       onClick={() => navigate(`/product/${item._id}`)}
                     >
-                      <img src={item.images?.[0] || item.image} alt={item.name} />
+                      <img src={item.images?.[0]?.url || item.image} alt={item.name} />
                     </div>
 
                     <div className="item-details">
@@ -127,7 +127,7 @@ const CartPage = () => {
                       </h3>
                       <p className="item-seller">Sold by: {item.seller?.name}</p>
                       <div className="item-price-mobile">
-                        <span className="item-price">${item.price}</span>
+                        <span className="item-price">${item.discountPrice ?? item.price}</span>
                         {item.originalPrice && (
                           <span className="item-original-price">${item.originalPrice}</span>
                         )}
@@ -151,14 +151,14 @@ const CartPage = () => {
                     </div>
 
                     <div className="item-price-desktop">
-                      <div className="price">${item.price}</div>
+                      <div className="price">${item.discountPrice ?? item.price}</div>
                       {item.originalPrice && (
                         <div className="original-price">${item.originalPrice}</div>
                       )}
                     </div>
 
                     <div className="item-total">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ${((item.discountPrice ?? item.price) * item.quantity).toFixed(2)}
                     </div>
 
                     <button 

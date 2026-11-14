@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Header.css';
+import apiClient from '../services/apiClient';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -28,7 +29,8 @@ const Header = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try { await apiClient.get('/auth/logout'); } catch (_) { /* Clear local state even if the API is unavailable. */ }
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);

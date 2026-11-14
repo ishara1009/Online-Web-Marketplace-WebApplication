@@ -1,10 +1,22 @@
 #  Online Web Marketplace Application
 
-![Application Screenshot](images/image6.png)
-![Application Screenshot](images/image2.png)
-![Application Screenshot](images/image4.png)
-![Application Screenshot](images/image5.png)
-![Application Screenshot](images/image3.png)
+## Application Screenshots
+
+### Home Page
+
+![TechMart home page](images/1.png)
+
+### Product Categories
+
+![TechMart product categories](images/2.png)
+
+### Contact Page
+
+![TechMart contact page](images/3.png)
+
+### Login Page
+
+![TechMart login page](images/4.png)
 
 A full-stack MERN (MongoDB, Express, React, Node.js) web marketplace application with separate authentication and dashboards for Customers and Sellers.
 
