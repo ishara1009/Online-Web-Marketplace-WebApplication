@@ -157,6 +157,9 @@ const Login = () => {
             <Link to="/signup" className="signup-link customer-link">
               Create your free account
             </Link>
+            <Link to="/signup/seller" className="signup-link seller-link">
+              Register a seller business
+            </Link>
           </div>
         </div>
       </div>

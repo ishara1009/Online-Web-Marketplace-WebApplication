@@ -2,7 +2,8 @@ const ErrorHandler = require('../utils/errorHandler');
 
 module.exports = (err, req, res, next) => {
   if (err.name === 'MulterError' || err.message?.startsWith('Only JPG')) {
-    return res.status(400).json({ success: false, message: err.code === 'LIMIT_FILE_SIZE' ? 'Each image must be 5 MB or smaller' : err.message });
+    const limit = req.originalUrl.includes('/avatar') ? 'Profile picture must be 2 MB or smaller' : 'Each image must be 5 MB or smaller';
+    return res.status(400).json({ success: false, message: err.code === 'LIMIT_FILE_SIZE' ? limit : err.message });
   }
   let error = err;
   if (err.name === 'CastError') error = new ErrorHandler(`Resource not found. Invalid: ${err.path}`, 400);

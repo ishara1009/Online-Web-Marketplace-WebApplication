@@ -2,18 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import './SellerProductsPage.css';
+import apiClient from '../services/apiClient';
 
 const SellerProductsPage = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [image, setImage] = useState(null);
+  const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     price: '',
     originalPrice: '',
     category: '',
     stock: '',
-    description: ''
+    description: '',
+    sku: ''
   });
 
   useEffect(() => {
@@ -29,9 +34,7 @@ const SellerProductsPage = () => {
       return;
     }
 
-    // Load seller's products
-    const storedProducts = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-    setProducts(storedProducts);
+    apiClient.get('/seller/products').then(({ data }) => setProducts(data.products || [])).catch(() => setMessage('Could not load products. Please check the backend connection.'));
   }, [navigate]);
 
   const handleChange = (e) => {
@@ -39,31 +42,19 @@ const SellerProductsPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const newProduct = {
-      _id: Date.now().toString(),
-      ...formData,
-      price: parseFloat(formData.price),
-      originalPrice: parseFloat(formData.originalPrice) || null,
-      stock: parseInt(formData.stock),
-      image: 'https://via.placeholder.com/300x300?text=' + encodeURIComponent(formData.name),
-      images: [
-        'https://via.placeholder.com/300x300?text=' + encodeURIComponent(formData.name),
-      ],
-      rating: 0,
-      reviews: 0,
-      seller: {
-        name: JSON.parse(localStorage.getItem('user')).firstName + "'s Store"
-      },
-      discount: formData.originalPrice ? Math.round(((formData.originalPrice - formData.price) / formData.originalPrice) * 100) : 0,
-      createdAt: new Date().toISOString()
-    };
-
-    const updatedProducts = [...products, newProduct];
-    setProducts(updatedProducts);
-    localStorage.setItem('sellerProducts', JSON.stringify(updatedProducts));
+    const payload = new FormData();
+    Object.entries(formData).forEach(([key, value]) => payload.append(key === 'originalPrice' ? 'discountPrice' : key, value));
+    if (image) payload.append('image', image);
+    if (!editingId && !image) { setMessage('Choose a main product image.'); return; }
+    try {
+      const { data } = editingId
+        ? await apiClient.put(`/seller/products/${editingId}`, payload)
+        : await apiClient.post('/seller/products', payload);
+      setProducts(current => editingId ? current.map(item => item._id === editingId ? data.product : item) : [data.product, ...current]);
+      setMessage(editingId ? 'Product updated successfully.' : 'Product added successfully.');
+    } catch (error) { setMessage(error.response?.data?.message || 'Could not save the product.'); return; }
 
     // Reset form
     setFormData({
@@ -72,17 +63,23 @@ const SellerProductsPage = () => {
       originalPrice: '',
       category: '',
       stock: '',
-      description: ''
+      description: '',
+      sku: ''
     });
+    setImage(null);
+    setEditingId(null);
     setShowAddForm(false);
-    alert('Product added successfully!');
   };
 
-  const deleteProduct = (productId) => {
+  const editProduct = product => {
+    setFormData({ name: product.name, price: product.price, originalPrice: product.discountPrice || '', category: product.category, stock: product.stock, description: product.description, sku: product.sku });
+    setEditingId(product._id); setImage(null); setShowAddForm(true); window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const deleteProduct = async (productId) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      const updatedProducts = products.filter(p => p._id !== productId);
-      setProducts(updatedProducts);
-      localStorage.setItem('sellerProducts', JSON.stringify(updatedProducts));
+      try { await apiClient.delete(`/seller/products/${productId}`); setProducts(current => current.filter(p => p._id !== productId)); }
+      catch (error) { setMessage(error.response?.data?.message || 'Could not delete the product.'); }
     }
   };
 
@@ -95,15 +92,17 @@ const SellerProductsPage = () => {
           <h1>My Products</h1>
           <button 
             className="add-product-btn"
-            onClick={() => setShowAddForm(!showAddForm)}
+            onClick={() => { setShowAddForm(!showAddForm); if (showAddForm) { setEditingId(null); setImage(null); } }}
           >
             {showAddForm ? 'Cancel' : 'Add Product'}
           </button>
         </div>
 
+        {message && <div className="checkout-error" role="status">{message}</div>}
+
         {showAddForm && (
           <div className="add-product-form">
-            <h2>Add New Product</h2>
+            <h2>{editingId ? 'Edit Product' : 'Add New Product'}</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-grid">
                 <div className="form-group full">
@@ -115,6 +114,16 @@ const SellerProductsPage = () => {
                     onChange={handleChange}
                     required
                   />
+                </div>
+
+                <div className="form-group">
+                  <label>SKU *</label>
+                  <input name="sku" value={formData.sku} onChange={handleChange} required />
+                </div>
+
+                <div className="form-group">
+                  <label>Main Image {editingId ? '(leave empty to keep current)' : '*'}</label>
+                  <input type="file" accept="image/*" onChange={e => setImage(e.target.files[0] || null)} required={!editingId} />
                 </div>
 
                 <div className="form-group">
@@ -184,7 +193,7 @@ const SellerProductsPage = () => {
               </div>
 
               <button type="submit" className="submit-btn">
-                Add Product
+                {editingId ? 'Save Changes' : 'Add Product'}
               </button>
             </form>
           </div>
@@ -201,7 +210,7 @@ const SellerProductsPage = () => {
             {products.map(product => (
               <div key={product._id} className="product-card">
                 <div className="product-image">
-                  <img src={product.image} alt={product.name} />
+                  {product.images?.[0]?.url ? <img src={product.images[0].url} alt={product.name} /> : <div className="no-products-icon">IMG</div>}
                   {product.discount > 0 && (
                     <div className="discount-badge">-{product.discount}%</div>
                   )}
@@ -212,9 +221,9 @@ const SellerProductsPage = () => {
                   <p className="product-category">{product.category}</p>
                   
                   <div className="product-prices">
-                    <span className="current-price">${product.price}</span>
-                    {product.originalPrice && (
-                      <span className="original-price">${product.originalPrice}</span>
+                    <span className="current-price">${product.discountPrice ?? product.price}</span>
+                    {product.discountPrice != null && (
+                      <span className="original-price">${product.price}</span>
                     )}
                   </div>
 
@@ -225,14 +234,14 @@ const SellerProductsPage = () => {
                   </div>
 
                   <div className="product-stats">
-                    <span>{product.rating.toFixed(1)}</span>
-                    <span>{product.reviews} views</span>
+                    <span>{Number(product.ratings || 0).toFixed(1)}</span>
+                    <span>{product.numOfReviews || 0} reviews</span>
                   </div>
 
                   <div className="product-actions">
                     <button 
                       className="edit-btn"
-                      onClick={() => alert('Edit functionality coming soon!')}
+                      onClick={() => editProduct(product)}
                     >
                       Edit
                     </button>

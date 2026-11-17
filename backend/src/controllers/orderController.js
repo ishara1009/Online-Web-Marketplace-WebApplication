@@ -26,7 +26,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const normalizedItems = products.map(product => {
     const quantity = requested.get(String(product._id));
     if (product.stock < quantity || product.status === 'out_of_stock') throw new ErrorHandler(`${product.name} does not have enough stock`, 409);
-    return { product: product._id, name: product.name, quantity, price: product.discountPrice ?? product.price, image: product.images?.[0]?.url || '/images/product-placeholder.png' };
+    return { seller: product.seller, product: product._id, name: product.name, quantity, price: product.discountPrice ?? product.price, image: product.images?.[0]?.url || '/images/product-placeholder.png' };
   });
   const reserved = [];
   try {
@@ -45,6 +45,37 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     await Promise.all(reserved.map(item => Product.updateOne({ _id: item.product }, { $inc: { stock: item.quantity } })));
     throw error;
   }
+});
+
+exports.getSellerOrders = catchAsyncErrors(async (req, res) => {
+  const orders = await Order.find({ 'orderItems.seller': req.user.id }).populate('user', 'name email').sort({ createdAt: -1 });
+  const scoped = orders.map(order => {
+    const data = order.toObject();
+    data.orderItems = data.orderItems.filter(item => String(item.seller) === String(req.user.id));
+    data.sellerTotal = data.orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return data;
+  });
+  res.status(200).json({ success: true, orders: scoped });
+});
+
+exports.getSellerOrder = catchAsyncErrors(async (req, res, next) => {
+  const order = await Order.findOne({ _id: req.params.id, 'orderItems.seller': req.user.id }).populate('user', 'name email');
+  if (!order) return next(new ErrorHandler('Order not found', 404));
+  const data = order.toObject();
+  data.orderItems = data.orderItems.filter(item => String(item.seller) === String(req.user.id));
+  data.sellerTotal = data.orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  res.status(200).json({ success: true, order: data });
+});
+
+exports.updateSellerOrder = catchAsyncErrors(async (req, res, next) => {
+  const allowed = ['Processing', 'Shipped', 'Delivered', 'Cancelled'];
+  if (!allowed.includes(req.body.status)) return next(new ErrorHandler('Invalid order status', 400));
+  const order = await Order.findOne({ _id: req.params.id, 'orderItems.seller': req.user.id });
+  if (!order) return next(new ErrorHandler('Order not found', 404));
+  order.orderStatus = req.body.status;
+  if (req.body.status === 'Delivered') order.deliveredAt = Date.now();
+  await order.save({ validateBeforeSave: false });
+  res.status(200).json({ success: true, orderStatus: order.orderStatus });
 });
 
 // Get single order

@@ -12,12 +12,25 @@ const {
   deleteReview,
   getAdminProducts,
   getAdminProductDetails,
+  getSellerProducts,
+  getSellerProductDetails,
+  createSellerProduct,
+  updateSellerProduct,
+  deleteSellerProduct,
 } = require('../controllers/productController');
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 const productUpload = require('../middlewares/productUpload');
 
 router.route('/products').get(getAllProducts);
+
+router.route('/seller/products')
+  .get(isAuthenticatedUser, authorizeRoles('seller'), getSellerProducts)
+  .post(isAuthenticatedUser, authorizeRoles('seller'), productUpload, createSellerProduct);
+router.route('/seller/products/:id')
+  .get(isAuthenticatedUser, authorizeRoles('seller'), getSellerProductDetails)
+  .put(isAuthenticatedUser, authorizeRoles('seller'), productUpload, updateSellerProduct)
+  .delete(isAuthenticatedUser, authorizeRoles('seller'), deleteSellerProduct);
 
 router
   .route('/admin/products')

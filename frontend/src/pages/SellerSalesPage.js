@@ -34,6 +34,18 @@ const SellerSalesPage = () => {
     }
   }, [navigate]);
 
+  const exportReport = format => {
+    if (format === 'pdf') { window.print(); return; }
+    const rows = [['Month', 'Sales'], ...salesData.monthlySales.map(item => [item.month, item.sales.toFixed(2)])];
+    const content = rows.map(row => row.map(value => `"${String(value).replaceAll('"', '""')}"`).join(',')).join('\n');
+    const blob = new Blob([content], { type: format === 'excel' ? 'application/vnd.ms-excel' : 'text/csv' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `techmart-sales-report.${format === 'excel' ? 'xls' : 'csv'}`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   return (
     <div className="seller-sales-page">
       <div className="page-header">
@@ -170,13 +182,13 @@ const SellerSalesPage = () => {
         <div className="export-section">
           <h3>Export Reports</h3>
           <div className="export-buttons">
-            <button className="export-btn" onClick={() => alert('Exporting as PDF...')}>
-              Export as PDF
+            <button className="export-btn" onClick={() => exportReport('pdf')}>
+              Print / Save as PDF
             </button>
-            <button className="export-btn" onClick={() => alert('Exporting as Excel...')}>
+            <button className="export-btn" onClick={() => exportReport('excel')}>
               Export as Excel
             </button>
-            <button className="export-btn" onClick={() => alert('Exporting as CSV...')}>
+            <button className="export-btn" onClick={() => exportReport('csv')}>
               Export as CSV
             </button>
           </div>

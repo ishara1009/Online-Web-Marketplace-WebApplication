@@ -23,7 +23,8 @@
   font-weight: 600;
 }
 
-.back-btn {
+.settings-back-button {
+  min-height: 44px;
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border: 2px solid white;
@@ -35,10 +36,15 @@
   font-weight: 600;
 }
 
-.back-btn:hover {
+.settings-back-button:hover {
   background: white;
   color: #2563eb;
   transform: translateY(-1px);
+}
+
+.settings-back-button:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 3px;
 }
 
 .settings-container {
@@ -71,7 +77,10 @@
 }
 
 .settings-card {
+  width: 100%;
+  min-height: 166px;
   background: white;
+  color: #111827;
   border-radius: 12px;
   padding: 1.75rem;
   display: flex;
@@ -81,24 +90,38 @@
   transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   border: 1px solid #e8eaed;
+  text-align: left;
+  font: inherit;
 }
 
 .settings-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255, 107, 0, 0.12);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.14);
   border-color: #2563eb;
 }
 
 .settings-card-icon {
-  font-size: 2.2rem;
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
   border-radius: 10px;
   flex-shrink: 0;
+  color: #2563eb;
+  transition: color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.settings-card-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.settings-card:hover .settings-card-icon {
+  color: white;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  transform: scale(1.04);
 }
 
 .settings-card-content {
@@ -128,6 +151,12 @@
 
 .settings-card:hover .settings-card-arrow {
   transform: translateX(4px);
+}
+
+.settings-card:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, .28);
+  outline-offset: 3px;
+  border-color: #2563eb;
 }
 
 @media (max-width: 1024px) {
@@ -162,7 +191,7 @@
     font-size: 1.25rem;
   }
 
-  .back-btn {
+  .settings-back-button {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
   }
@@ -172,9 +201,13 @@
   }
 
   .settings-card-icon {
-    font-size: 2rem;
     width: 52px;
     height: 52px;
+  }
+
+  .settings-card-icon svg {
+    width: 25px;
+    height: 25px;
   }
 
   .settings-card-content h3 {

@@ -54,14 +54,21 @@ const EditCustomerProfile = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-        setAvatarFile(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) {
+      setError('Please choose a JPG, PNG, WEBP, or GIF image.');
+      e.target.value = '';
+      return;
     }
+    if (file.size > 2 * 1024 * 1024) {
+      setError('Profile picture must be 2 MB or smaller.');
+      e.target.value = '';
+      return;
+    }
+    setError('');
+    if (previewImage?.startsWith('blob:')) URL.revokeObjectURL(previewImage);
+    setPreviewImage(URL.createObjectURL(file));
+    setAvatarFile(file);
   };
 
   const handleSubmit = async (e) => {
@@ -79,26 +86,29 @@ const EditCustomerProfile = () => {
         address: formData.address,
       };
 
-      if (avatarFile) {
-        updateData.avatar = avatarFile;
-        console.log('Sending avatar update - length:', avatarFile.length);
-      }
-
-      console.log('Update data keys:', Object.keys(updateData));
-
       const response = await axios.put('/api/auth/me/update', updateData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log('Response from backend:', response.data);
+      let updatedUser = response.data.user;
+      if (avatarFile) {
+        const avatarData = new FormData();
+        avatarData.append('avatar', avatarFile);
+        const avatarResponse = await axios.put('/api/auth/me/avatar', avatarData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        updatedUser = avatarResponse.data.user;
+      }
 
       if (response.data.success) {
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setAvatarFile(null);
         setSuccess('Profile updated successfully!');
         setTimeout(() => navigate('/user/dashboard'), 1500);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
+      const message = err.response?.data?.message || err.response?.data?.errMessage;
+      setError(err.response?.status === 413 ? 'Profile picture is too large. Choose an image under 2 MB.' : message || 'Failed to update profile. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -143,11 +153,12 @@ const EditCustomerProfile = () => {
                 type="file"
                 id="avatar"
                 name="avatar"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp,image/gif"
                 onChange={handleImageChange}
                 style={{ display: 'none' }}
               />
             </label>
+            <small className="image-upload-help">JPG, PNG, WEBP or GIF · maximum 2 MB</small>
           </div>
 
           <div className="form-group">

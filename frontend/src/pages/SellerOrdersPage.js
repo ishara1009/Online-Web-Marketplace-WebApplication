@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SellerOrdersPage.css';
+import apiClient from '../services/apiClient';
 
 const SellerOrdersPage = () => {
   const navigate = useNavigate();
@@ -21,39 +22,15 @@ const SellerOrdersPage = () => {
       return;
     }
 
-    // Load seller's orders (sample data)
-    const sampleOrders = [
-      {
-        id: '1001',
-        customerName: 'John Doe',
-        items: 2,
-        total: 149.99,
-        status: 'pending',
-        date: '2026-01-25',
-        shippingAddress: '123 Main St, New York, NY 10001'
-      },
-      {
-        id: '1002',
-        customerName: 'Jane Smith',
-        items: 1,
-        total: 79.99,
-        status: 'processing',
-        date: '2026-01-26',
-        shippingAddress: '456 Oak Ave, Los Angeles, CA 90001'
-      },
-      {
-        id: '1003',
-        customerName: 'Mike Johnson',
-        items: 3,
-        total: 299.99,
-        status: 'shipped',
-        date: '2026-01-24',
-        shippingAddress: '789 Pine Rd, Chicago, IL 60601'
-      }
-    ];
-
-    setOrders(sampleOrders);
-    setLoading(false);
+    apiClient.get('/orders/seller/orders').then(({ data }) => setOrders((data.orders || []).map(order => ({
+      id: order._id,
+      customerName: order.user?.name || 'Customer',
+      items: order.orderItems.reduce((sum, item) => sum + item.quantity, 0),
+      total: order.sellerTotal,
+      status: order.orderStatus.toLowerCase(),
+      date: order.createdAt,
+      shippingAddress: `${order.shippingInfo.city}, ${order.shippingInfo.country}`,
+    })))).finally(() => setLoading(false));
   }, [navigate]);
 
   const getStatusColor = (status) => {
@@ -67,12 +44,9 @@ const SellerOrdersPage = () => {
     return colors[status] || '#6c757d';
   };
 
-  const updateOrderStatus = (orderId, newStatus) => {
-    const updatedOrders = orders.map(order =>
-      order.id === orderId ? { ...order, status: newStatus } : order
-    );
-    setOrders(updatedOrders);
-    alert(`Order #${orderId} status updated to ${newStatus}`);
+  const updateOrderStatus = async (orderId, newStatus) => {
+    await apiClient.put(`/orders/seller/orders/${orderId}`, { status: newStatus.charAt(0).toUpperCase() + newStatus.slice(1) });
+    setOrders(current => current.map(order => order.id === orderId ? { ...order, status: newStatus } : order));
   };
 
   const filteredOrders = filter === 'all' 
@@ -180,7 +154,7 @@ const SellerOrdersPage = () => {
                         </select>
                         <button 
                           className="view-btn"
-                          onClick={() => alert(`View details for order #${order.id}`)}
+                          onClick={() => navigate(`/seller/orders/${order.id}`)}
                         >
                           View
                         </button>

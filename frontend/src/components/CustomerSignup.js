@@ -236,6 +236,9 @@ const CustomerSignup = () => {
           <p>
             Already have an account? <Link to="/login">Login here</Link>
           </p>
+          <p>
+            Want to sell on TechMart? <Link to="/signup/seller">Create a seller account</Link>
+          </p>
         </div>
       </div>
     </div>

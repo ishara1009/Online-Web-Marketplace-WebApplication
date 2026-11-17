@@ -140,6 +140,12 @@
   transform: translateY(-2px);
 }
 
+.image-upload-help {
+  margin-top: -7px;
+  color: #64748b;
+  font-size: 12px;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;

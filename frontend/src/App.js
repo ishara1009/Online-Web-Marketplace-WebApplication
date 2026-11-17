@@ -27,6 +27,11 @@ import NotFoundPage from './pages/NotFoundPage';
 import InformationPage from './pages/InformationPage';
 import WishlistPage from './pages/WishlistPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
+import SellerSignup from './components/SellerSignup';
+import AdminUsersPage from './pages/AdminUsersPage';
+import AdminOrdersPage from './pages/AdminOrdersPage';
+import ManagementOrderDetailsPage from './pages/ManagementOrderDetailsPage';
+import CustomerPreferencePage from './pages/CustomerPreferencePage';
 import './App.css';
 
 function App() {
@@ -42,12 +47,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<CustomerSignup />} />
           <Route path="/signup/customer" element={<Navigate to="/signup" replace />} />
-          <Route path="/signup/seller" element={<Navigate to="/signup" replace />} />
+          <Route path="/signup/seller" element={<SellerSignup />} />
           
           {/* User account routes */}
           <Route path="/user/dashboard" element={protectedPage(<CustomerDashboard />, ['user'])} />
           <Route path="/user/edit-profile" element={protectedPage(<EditCustomerProfile />, ['user'])} />
           <Route path="/user/settings" element={protectedPage(<CustomerSettings />, ['user'])} />
+          <Route path="/user/settings/:section" element={protectedPage(<CustomerPreferencePage />, ['user'])} />
           <Route path="/user/profile-information" element={protectedPage(<ProfileInformation />, ['user'])} />
           <Route path="/user/addresses" element={protectedPage(<AddressesPage />, ['user'])} />
           <Route path="/customer/*" element={<Navigate to="/user/dashboard" replace />} />
@@ -55,11 +61,15 @@ function App() {
           {/* Admins can sign in but cannot self-register. */}
           <Route path="/admin/dashboard" element={protectedPage(<AdminDashboard />, ['admin'])} />
           <Route path="/admin/products" element={protectedPage(<AdminProductsPage />, ['admin'])} />
+          <Route path="/admin/users" element={protectedPage(<AdminUsersPage />, ['admin'])} />
+          <Route path="/admin/orders" element={protectedPage(<AdminOrdersPage />, ['admin'])} />
+          <Route path="/admin/orders/:id" element={protectedPage(<ManagementOrderDetailsPage mode="admin" />, ['admin'])} />
 
           {/* Seller account routes */}
           <Route path="/seller/dashboard" element={protectedPage(<SellerDashboard />, ['seller'])} />
           <Route path="/seller/products" element={protectedPage(<SellerProductsPage />, ['seller'])} />
           <Route path="/seller/orders" element={protectedPage(<SellerOrdersPage />, ['seller'])} />
+          <Route path="/seller/orders/:id" element={protectedPage(<ManagementOrderDetailsPage mode="seller" />, ['seller'])} />
           <Route path="/seller/sales" element={protectedPage(<SellerSalesPage />, ['seller'])} />
           <Route path="/seller/analytics" element={protectedPage(<SellerAnalyticsPage />, ['seller'])} />
           <Route path="/seller/settings" element={protectedPage(<SellerSettingsPage />, ['seller'])} />

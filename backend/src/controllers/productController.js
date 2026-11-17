@@ -150,6 +150,42 @@ exports.getAdminProductDetails = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({ success: true, product });
 });
 
+exports.getSellerProducts = catchAsyncErrors(async (req, res) => {
+  const products = await Product.find({ seller: req.user.id }).sort({ createdAt: -1 });
+  res.status(200).json({ success: true, products });
+});
+
+exports.getSellerProductDetails = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findOne({ _id: req.params.id, seller: req.user.id });
+  if (!product) return next(new ErrorHandler('Product not found', 404));
+  res.status(200).json({ success: true, product });
+});
+
+exports.createSellerProduct = exports.createProduct;
+
+exports.updateSellerProduct = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.findOne({ _id: req.params.id, seller: req.user.id });
+  if (!product) return next(new ErrorHandler('Product not found', 404));
+  const data = normalizeBody(req.body);
+  const effectivePrice = data.price ?? product.price;
+  if (data.discountPrice != null && data.discountPrice >= effectivePrice) return next(new ErrorHandler('Discount price must be less than the regular price', 400));
+  const newFiles = [...(req.files?.image || []), ...(req.files?.images || [])];
+  const oldImages = product.images || [];
+  if (newFiles.length) data.images = newFiles.map(imageRecord);
+  try { product = await Product.findOneAndUpdate({ _id: req.params.id, seller: req.user.id }, data, { new: true, runValidators: true }); }
+  catch (error) { if (data.images) await removeImages(data.images); throw error; }
+  if (newFiles.length) await removeImages(oldImages);
+  res.status(200).json({ success: true, product });
+});
+
+exports.deleteSellerProduct = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findOne({ _id: req.params.id, seller: req.user.id });
+  if (!product) return next(new ErrorHandler('Product not found', 404));
+  await product.deleteOne();
+  await removeImages(product.images);
+  res.status(200).json({ success: true, message: 'Product deleted successfully' });
+});
+
 // Create/Update product review
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, productId } = req.body;

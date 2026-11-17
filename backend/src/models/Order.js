@@ -9,6 +9,11 @@ const orderSchema = new mongoose.Schema(
     },
     orderItems: [
       {
+        seller: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+          required: true,
+        },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Product',

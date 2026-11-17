@@ -10,12 +10,6 @@ const Footer = () => {
           <div className="footer-section">
             <h3>TechMart</h3>
             <p>Genuine electronics, trusted sellers, and better technology for everyday life.</p>
-            <div className="social-links">
-              <a href="#facebook" aria-label="Facebook">FB</a>
-              <a href="#twitter" aria-label="Twitter">TW</a>
-              <a href="#instagram" aria-label="Instagram">IG</a>
-              <a href="#youtube" aria-label="YouTube">YT</a>
-            </div>
           </div>
 
           <div className="footer-section">

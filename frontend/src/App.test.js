@@ -1,8 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.mock('axios', () => {
+  const client = { get: jest.fn(), post: jest.fn(), put: jest.fn(), delete: jest.fn() };
+  return { __esModule: true, default: { ...client, create: () => client } };
+});
+
+test('renders the TechMart storefront', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /discover the latest technology/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /shop now/i })).toBeInTheDocument();
 });

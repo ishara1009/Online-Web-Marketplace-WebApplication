@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
+      enum: ['user', 'seller', 'admin'],
       default: 'user',
     },
     phone: {
@@ -47,6 +47,22 @@ const userSchema = new mongoose.Schema(
     address: {
       type: String,
       maxLength: [200, 'Address cannot exceed 200 characters'],
+    },
+    shopName: { type: String, trim: true, maxLength: 100 },
+    businessAddress: { type: String, trim: true, maxLength: 250 },
+    nicOrBusinessRegNo: { type: String, trim: true, maxLength: 80 },
+    bankAccountOrPaymentMethod: { type: String, trim: true, maxLength: 120 },
+    shopDescription: { type: String, trim: true, maxLength: 500 },
+    notifications: {
+      emailNotifications: { type: Boolean, default: true },
+      orderUpdates: { type: Boolean, default: true },
+      promotionalEmails: { type: Boolean, default: false },
+      weeklyReports: { type: Boolean, default: true },
+    },
+    accountStatus: {
+      type: String,
+      enum: ['active', 'deactivated'],
+      default: 'active',
     },
     // User profile fields
     gender: {

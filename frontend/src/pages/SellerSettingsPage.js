@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SellerSettingsPage.css';
+import apiClient from '../services/apiClient';
 
 const SellerSettingsPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [passwords, setPasswords] = useState({ oldPassword: '', password: '', confirmPassword: '' });
+  const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
     shopName: '',
     ownerName: '',
@@ -38,7 +41,7 @@ const SellerSettingsPage = () => {
     setUser(parsedUser);
     setFormData({
       shopName: parsedUser.shopName || '',
-      ownerName: parsedUser.ownerName || '',
+      ownerName: parsedUser.ownerName || parsedUser.name || '',
       email: parsedUser.email || '',
       phone: parsedUser.phone || '',
       businessAddress: parsedUser.businessAddress || '',
@@ -70,17 +73,23 @@ const SellerSettingsPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedUser = { ...user, ...formData };
-    localStorage.setItem('user', JSON.stringify(updatedUser));
-    setUser(updatedUser);
-    alert('Settings updated successfully!');
+    try { const { data } = await apiClient.put('/auth/me/update', { name: formData.ownerName, ...formData }); const updatedUser = { ...user, ...data.user }; localStorage.setItem('user', JSON.stringify(updatedUser)); setUser(updatedUser); setMessage('Settings updated successfully.'); }
+    catch (error) { setMessage(error.response?.data?.message || 'Could not update settings.'); }
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = async (e) => {
     e.preventDefault();
-    alert('Password change functionality will be implemented with backend');
+    if (passwords.password !== passwords.confirmPassword) { setMessage('New passwords do not match.'); return; }
+    try { const { data } = await apiClient.put('/auth/password/update', { oldPassword: passwords.oldPassword, password: passwords.password }); localStorage.setItem('token', data.token); localStorage.setItem('user', JSON.stringify(data.user)); setPasswords({ oldPassword: '', password: '', confirmPassword: '' }); setMessage('Password changed successfully.'); }
+    catch (error) { setMessage(error.response?.data?.message || 'Could not change password.'); }
+  };
+
+  const deactivate = async () => {
+    if (!window.confirm('Deactivate your shop and sign out?')) return;
+    try { await apiClient.put('/auth/me/deactivate'); localStorage.removeItem('user'); localStorage.removeItem('token'); navigate('/'); }
+    catch (error) { setMessage(error.response?.data?.message || 'Could not deactivate the shop.'); }
   };
 
   if (!user) {
@@ -97,6 +106,7 @@ const SellerSettingsPage = () => {
       </div>
 
       <div className="settings-container">
+        {message && <div className="checkout-error" role="status">{message}</div>}
         {/* Profile Settings */}
         <div className="settings-section">
           <h3> Shop Profile</h3>
@@ -254,17 +264,17 @@ const SellerSettingsPage = () => {
             <div className="form-grid">
               <div className="form-group">
                 <label>Current Password</label>
-                <input type="password" placeholder="Enter current password" />
+                <input type="password" value={passwords.oldPassword} onChange={e => setPasswords({ ...passwords, oldPassword: e.target.value })} placeholder="Enter current password" required />
               </div>
 
               <div className="form-group">
                 <label>New Password</label>
-                <input type="password" placeholder="Enter new password" />
+                <input type="password" minLength="6" value={passwords.password} onChange={e => setPasswords({ ...passwords, password: e.target.value })} placeholder="Enter new password" required />
               </div>
 
               <div className="form-group full-width">
                 <label>Confirm New Password</label>
-                <input type="password" placeholder="Confirm new password" />
+                <input type="password" minLength="6" value={passwords.confirmPassword} onChange={e => setPasswords({ ...passwords, confirmPassword: e.target.value })} placeholder="Confirm new password" required />
               </div>
             </div>
 
@@ -283,7 +293,7 @@ const SellerSettingsPage = () => {
                 <h4>Deactivate Shop</h4>
                 <p>Temporarily disable your shop from the marketplace</p>
               </div>
-              <button className="danger-btn secondary">Deactivate</button>
+              <button className="danger-btn secondary" onClick={deactivate}>Deactivate</button>
             </div>
 
             <div className="danger-item">
@@ -291,7 +301,7 @@ const SellerSettingsPage = () => {
                 <h4>Delete Account</h4>
                 <p>Permanently delete your shop and all associated data</p>
               </div>
-              <button className="danger-btn primary">Delete Account</button>
+              <button className="danger-btn primary" onClick={() => { window.location.href = 'mailto:support@techmart.lk?subject=Seller%20account%20deletion%20request'; }}>Contact Support</button>
             </div>
           </div>
         </div>

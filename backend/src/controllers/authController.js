@@ -2,6 +2,8 @@ const User = require('../models/User');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
+const fs = require('fs/promises');
+const path = require('path');
 
 // Public registration always creates a standard user. Admins are provisioned separately.
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -36,6 +38,24 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 201, res);
 });
 
+// Seller registration stores the business profile and creates a restricted seller account.
+exports.registerSeller = catchAsyncErrors(async (req, res, next) => {
+  const { ownerName, shopName, email, password, phone, businessAddress,
+    nicOrBusinessRegNo, bankAccountOrPaymentMethod, agreedToSellerPolicy, avatar } = req.body;
+  if (!ownerName || !shopName || !email || !password || !phone || !businessAddress) {
+    return next(new ErrorHandler('Complete the required seller information', 400));
+  }
+  if (!agreedToSellerPolicy) return next(new ErrorHandler('You must accept the seller policy', 400));
+  if (await User.findOne({ email: email.toLowerCase() })) return next(new ErrorHandler('Email already exists', 400));
+  const user = await User.create({
+    name: ownerName, shopName, email: email.toLowerCase(), password, phone,
+    businessAddress, address: businessAddress, nicOrBusinessRegNo,
+    bankAccountOrPaymentMethod, role: 'seller', isVerified: false,
+    avatar: avatar ? { public_id: `seller_avatar_${Date.now()}`, url: avatar } : undefined,
+  });
+  res.status(201).json({ success: true, message: 'Seller account created successfully', user: { id: user.id, email: user.email } });
+});
+
 // Login user
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
@@ -50,6 +70,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
   if (!user) {
     return next(new ErrorHandler('Invalid email or password', 401));
+  }
+  if (user.accountStatus === 'deactivated') {
+    return next(new ErrorHandler('This account is deactivated. Contact support to restore access.', 403));
   }
 
   // Check if password is correct
@@ -89,37 +112,40 @@ exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Update user profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-  console.log('📝 Update Profile - User ID:', req.user.id);
-  console.log('📝 Has avatar in request:', !!req.body.avatar);
-  
-  const newUserData = {
-    name: req.body.name,
-    phone: req.body.phone,
-    address: req.body.address,
-  };
-
-  if (req.body.avatar) {
-    console.log('✅ Avatar received - length:', req.body.avatar.length);
-    newUserData.avatar = {
-      public_id: 'customer_avatar_' + Date.now(),
-      url: req.body.avatar,
-    };
-  } else {
-    console.log('❌ No avatar in request body');
-  }
+  const allowed = ['name', 'phone', 'address'];
+  if (req.user.role === 'seller') allowed.push('shopName', 'businessAddress', 'nicOrBusinessRegNo', 'bankAccountOrPaymentMethod', 'shopDescription', 'notifications');
+  const newUserData = {};
+  allowed.forEach(key => { if (req.body[key] !== undefined) newUserData[key] = req.body[key]; });
 
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
   });
 
-  console.log('💾 Updated user avatar URL exists:', !!user.avatar?.url);
-  console.log('💾 Avatar URL length:', user.avatar?.url?.length || 0);
-
   res.status(200).json({
     success: true,
     user,
   });
+});
+
+exports.updateAvatar = catchAsyncErrors(async (req, res, next) => {
+  if (!req.file) return next(new ErrorHandler('Choose a profile image to upload', 400));
+  const currentUser = await User.findById(req.user.id);
+  const oldAvatar = currentUser?.avatar;
+  const avatar = { public_id: req.file.filename, url: `/uploads/avatars/${req.file.filename}` };
+  const user = await User.findByIdAndUpdate(req.user.id, { avatar }, { new: true, runValidators: true });
+
+  if (oldAvatar?.url?.startsWith('/uploads/avatars/') && oldAvatar.public_id) {
+    try { await fs.unlink(path.join(__dirname, '../../uploads/avatars', path.basename(oldAvatar.public_id))); }
+    catch (error) { if (error.code !== 'ENOENT') console.error('Could not remove old avatar:', error.message); }
+  }
+  res.status(200).json({ success: true, user });
+});
+
+exports.deactivateAccount = catchAsyncErrors(async (req, res) => {
+  await User.findByIdAndUpdate(req.user.id, { accountStatus: 'deactivated' });
+  res.cookie('token', null, { expires: new Date(Date.now()), httpOnly: true });
+  res.status(200).json({ success: true, message: 'Account deactivated' });
 });
 
 // Update password
@@ -205,6 +231,10 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 
 // Admin: Update user
 exports.updateUser = catchAsyncErrors(async (req, res, next) => {
+  const existing = await User.findById(req.params.id);
+  if (!existing) return next(new ErrorHandler(`User not found with id: ${req.params.id}`, 404));
+  if (existing.role === 'admin') return next(new ErrorHandler('Administrator roles are managed through the dedicated admin workflow', 403));
+  if (!['user', 'seller'].includes(req.body.role)) return next(new ErrorHandler('Role must be customer or seller', 400));
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
@@ -232,6 +262,9 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 
   if (!user) {
     return next(new ErrorHandler(`User not found with id: ${req.params.id}`, 404));
+  }
+  if (user.role === 'admin' || String(user._id) === String(req.user.id)) {
+    return next(new ErrorHandler('Administrator accounts cannot be deleted from user management', 403));
   }
 
   await user.deleteOne();

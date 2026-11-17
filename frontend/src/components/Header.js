@@ -12,14 +12,20 @@ const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   useEffect(() => {
+    const refreshCart = () => {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      setCartCount(cart.reduce((total, item) => total + Number(item.quantity || 0), 0));
+    };
     const userData = localStorage.getItem('user');
     if (userData) {
       setUser(JSON.parse(userData));
     }
 
     // Get cart count from localStorage
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setCartCount(cart.reduce((total, item) => total + item.quantity, 0));
+    refreshCart();
+    window.addEventListener('storage', refreshCart);
+    window.addEventListener('techmart:cart', refreshCart);
+    return () => { window.removeEventListener('storage', refreshCart); window.removeEventListener('techmart:cart', refreshCart); };
   }, []);
 
   const handleSearch = (e) => {
@@ -42,6 +48,7 @@ const Header = () => {
     : user?.role === 'seller'
       ? '/seller/dashboard'
       : '/user/dashboard';
+  const ordersPath = user?.role === 'seller' ? '/seller/orders' : user?.role === 'admin' ? '/admin/orders' : '/orders';
 
   const categories = [
     'Computers',
@@ -118,8 +125,8 @@ const Header = () => {
                       <Link to={dashboardPath}>
                         My Dashboard
                       </Link>
-                      <Link to="/orders">My Orders</Link>
-                      <Link to="/wishlist">Wishlist</Link>
+                      <Link to={ordersPath}>{user.role === 'user' ? 'My Orders' : 'Manage Orders'}</Link>
+                      {user.role === 'user' && <Link to="/wishlist">Wishlist</Link>}
                       <button onClick={handleLogout}>Logout</button>
                     </div>
                   )}
@@ -187,8 +194,8 @@ const Header = () => {
                 <Link to={dashboardPath} onClick={() => setShowMobileMenu(false)}>
                   My Dashboard
                 </Link>
-                <Link to="/orders" onClick={() => setShowMobileMenu(false)}>My Orders</Link>
-                <Link to="/wishlist" onClick={() => setShowMobileMenu(false)}>Wishlist</Link>
+                <Link to={ordersPath} onClick={() => setShowMobileMenu(false)}>{user.role === 'user' ? 'My Orders' : 'Manage Orders'}</Link>
+                {user.role === 'user' && <Link to="/wishlist" onClick={() => setShowMobileMenu(false)}>Wishlist</Link>}
                 <button onClick={() => { handleLogout(); setShowMobileMenu(false); }}>Logout</button>
               </>
             ) : (

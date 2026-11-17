@@ -35,9 +35,13 @@ function TechMartLandingPage() {
   const [showTop, setShowTop] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [visibleCategories, setVisibleCategories] = useState(12);
+  const [cartCount, setCartCount] = useState(0);
+  const [newsletterMessage, setNewsletterMessage] = useState('');
 
   useEffect(() => {
     localStorage.setItem('techmart-theme', dark ? 'dark' : 'light');
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartCount(cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0));
     const onScroll = () => setShowTop(window.scrollY > 500);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
@@ -49,7 +53,7 @@ function TechMartLandingPage() {
 
   return (
     <div className={`techmart-page ${dark ? 'tm-dark' : ''}`}>
-      <div className="tm-topbar"><div className="tm-shell"><span>🚚 Free islandwide delivery on eligible orders</span><div><a href="tel:+94112345678">+94 11 234 5678</a><span>Order Tracking</span><span>Help Center</span></div></div></div>
+      <div className="tm-topbar"><div className="tm-shell"><span>🚚 Free islandwide delivery on eligible orders</span><div><a href="tel:+94112345678">+94 11 234 5678</a><a href="/orders">Order Tracking</a><a href="/support">Help Center</a></div></div></div>
       <header className="tm-header">
         <div className="tm-shell tm-nav">
           <button className="tm-logo" onClick={() => scroll('home')} aria-label="TechMart home"><span className="tm-logo-mark">T</span>Tech<span>Mart</span></button>
@@ -58,8 +62,8 @@ function TechMartLandingPage() {
           </nav>
           <div className="tm-actions">
             <form className="tm-search" onSubmit={submitSearch}><Icon name="search"/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search products..." aria-label="Search products"/>{search && <div className="tm-suggestions"><small>Search suggestions</small>{categories.filter(([,name])=>name.toLowerCase().includes(search.toLowerCase())).slice(0,4).map(([icon,name])=><button key={name} type="button" onClick={()=>go(`/products?search=${encodeURIComponent(name)}`)}>{icon}<span>{name}</span></button>)}</div>}</form>
-            <button className="tm-icon-btn tm-desktop-action" aria-label="Wishlist"><Icon name="heart"/><span className="tm-count">2</span></button>
-            <button className="tm-icon-btn tm-desktop-action" onClick={()=>go('/cart')} aria-label="Cart"><Icon name="cart"/><span className="tm-count">3</span></button>
+            <button className="tm-icon-btn tm-desktop-action" onClick={()=>go('/wishlist')} aria-label="Wishlist"><Icon name="heart"/></button>
+            <button className="tm-icon-btn tm-desktop-action" onClick={()=>go('/cart')} aria-label="Cart"><Icon name="cart"/>{cartCount > 0 && <span className="tm-count">{cartCount}</span>}</button>
             <button className="tm-theme" onClick={()=>setDark(!dark)} aria-label="Toggle dark mode"><Icon name={dark?'sun':'moon'}/></button>
             <button className="tm-login tm-desktop-action" onClick={()=>go('/login')}>Login</button><button className="tm-register tm-desktop-action" onClick={()=>go('/signup')}>Register</button>
             <button className="tm-mobile-toggle" onClick={()=>setMenuOpen(!menuOpen)} aria-label="Toggle menu"><Icon name={menuOpen?'close':'menu'}/></button>
@@ -85,14 +89,14 @@ function TechMartLandingPage() {
 
         <section className="tm-section tm-testimonials"><div className="tm-shell"><header className="tm-section-head centered"><div><span className="tm-kicker">Real customer stories</span><h2>Loved by Tech Shoppers</h2></div></header><div className="tm-testimonial-grid">{[["I purchased my gaming laptop from TechMart. Delivery was fast and the product was genuine.",'Michael Fernando','MF'],['Excellent customer service and affordable prices. The team helped me choose the perfect phone.','Nadeesha Silva','NS'],['Highly recommend TechMart for electronics. My order arrived safely and exactly as described.','Kasun Perera','KP']].map(([quote,name,initials])=><article key={name}><div className="tm-stars">★★★★★</div><p>“{quote}”</p><footer><span>{initials}</span><div><strong>{name}</strong><small>Verified customer</small></div><b>✓</b></footer></article>)}</div></div></section>
 
-        <section className="tm-newsletter"><div className="tm-shell tm-news-grid"><div><span>✉</span><div><h2>Stay Updated</h2><p>Subscribe to receive the latest offers, product launches, and exclusive discounts.</p></div></div><form onSubmit={e=>e.preventDefault()}><input type="email" placeholder="Enter your email address" required aria-label="Email address"/><button type="submit">Subscribe</button></form></div></section>
+        <section className="tm-newsletter"><div className="tm-shell tm-news-grid"><div><span>✉</span><div><h2>Stay Updated</h2><p>Subscribe to receive the latest offers, product launches, and exclusive discounts.</p></div></div><form onSubmit={e=>{e.preventDefault();setNewsletterMessage('Thanks for subscribing. Please check your inbox.');e.currentTarget.reset();}}><input type="email" placeholder="Enter your email address" required aria-label="Email address"/><button type="submit">Subscribe</button></form>{newsletterMessage&&<small role="status">{newsletterMessage}</small>}</div></section>
 
         <section className="tm-contact" id="contact"><div className="tm-shell"><header className="tm-section-head centered"><div><span className="tm-kicker">We're here to help</span><h2>Contact TechMart</h2><p>Questions about a product or an order? Our friendly team is ready to assist.</p></div></header><div className="tm-contact-grid"><article><span>⌖</span><h3>Visit Our Store</h3><p><strong>TechMart (Pvt) Ltd.</strong><br/>No. 125, Galle Road,<br/>Colombo 03, Sri Lanka.</p></article><article><span>☎</span><h3>Call Us</h3><p><a href="tel:+94112345678">+94 11 234 5678</a><br/><a href="tel:+94774567890">+94 77 456 7890</a></p></article><article><span>✉</span><h3>Email Us</h3><p><a href="mailto:support@techmart.lk">support@techmart.lk</a><br/><a href="mailto:sales@techmart.lk">sales@techmart.lk</a></p></article><article><span>◷</span><h3>Business Hours</h3><p>Mon – Fri: 9:00 AM – 6:00 PM<br/>Saturday: 9:00 AM – 2:00 PM<br/><em>Sunday: Closed</em></p></article></div></div></section>
       </main>
 
       <footer className="tm-footer"><div className="tm-shell tm-footer-grid"><div className="tm-footer-brand"><div className="tm-logo"><span className="tm-logo-mark">T</span>Tech<span>Mart</span></div><p>Sri Lanka's trusted destination for genuine electronics, great prices, and dependable service.</p><div className="tm-socials">{['f','◎','𝕏','in','▶'].map((x,i)=><a key={i} href="#social" aria-label={['Facebook','Instagram','X','LinkedIn','YouTube'][i]}>{x}</a>)}</div></div><div><h3>Quick Links</h3>{['Home','Shop','Categories','Deals','Brands','About Us','Contact','FAQs'].map(x=><a href="#home" key={x}>{x}</a>)}</div><div><h3>Customer Service</h3>{['Shipping Policy','Return Policy','Privacy Policy','Terms & Conditions'].map(x=><a href="#policy" key={x}>{x}</a>)}<h3 className="tm-footer-sub">Categories</h3>{['Smartphones','Laptops','Gaming','Computer Accessories','Mobile Accessories'].map(x=><a href="#categories" key={x}>{x}</a>)}</div><div><h3>Get In Touch</h3><p>No. 125, Galle Road,<br/>Colombo 03, Sri Lanka.</p><a href="tel:+94112345678">+94 11 234 5678</a><a href="mailto:support@techmart.lk">support@techmart.lk</a><h3 className="tm-footer-sub">We Accept</h3><div className="tm-payments"><b>VISA</b><b>MC</b><b>PayPal</b><b>Pay</b><b>G Pay</b></div></div></div><div className="tm-shell tm-copyright"><span>© 2026 TechMart (Pvt) Ltd. All Rights Reserved.</span><span>Made for smarter shopping in Sri Lanka.</span></div></footer>
 
-      <a className="tm-whatsapp" href="https://wa.me/94774567890" target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">◉<span>WhatsApp</span></a><button className="tm-chat" onClick={()=>setChatOpen(!chatOpen)} aria-label="Live chat">☏<span>Live Chat</span></button>{chatOpen&&<div className="tm-chat-box"><header><span>TechMart Support</span><button onClick={()=>setChatOpen(false)}>×</button></header><div><strong>Hi there! 👋</strong><p>How can we help you today?</p><button>Start a conversation</button></div></div>}{showTop&&<button className="tm-back-top" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})} aria-label="Back to top">↑</button>}
+      <a className="tm-whatsapp" href="https://wa.me/94774567890" target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">◉<span>WhatsApp</span></a><button className="tm-chat" onClick={()=>setChatOpen(!chatOpen)} aria-label="Live chat">☏<span>Live Chat</span></button>{chatOpen&&<div className="tm-chat-box"><header><span>TechMart Support</span><button onClick={()=>setChatOpen(false)}>×</button></header><div><strong>Hi there! 👋</strong><p>How can we help you today?</p><button onClick={()=>go('/support')}>Start a conversation</button></div></div>}{showTop&&<button className="tm-back-top" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})} aria-label="Back to top">↑</button>}
     </div>
   );
 }
